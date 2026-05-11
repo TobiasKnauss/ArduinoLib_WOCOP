@@ -21,9 +21,9 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 }
 
 //--------------------------------------------------------------------
-uint16_t WOCO_AliveCheck::GetCommand ()
+WOCO::ECommand WOCO_AliveCheck::GetCommand ()
 {
-  return (uint16_t)ECommand::AliveCheck;
+  return ECommand::AliveCheck;
 }
 
 //--------------------------------------------------------------------

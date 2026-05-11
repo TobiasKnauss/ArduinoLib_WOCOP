@@ -18,6 +18,10 @@ class WOCO_DigitalPinMode
   uint8_t m_PinMode   = 0;
 
 //==================== Constructors ====================
+public:
+  WOCO_DigitalPinMode (bool    i_MessageTypeIsReply,
+                       bool    i_ActionIsWrite);
+
   WOCO_DigitalPinMode (uint8_t i_PinNumber,
                        uint8_t i_PinMode,
                        bool    i_MessageTypeIsReply,
@@ -32,7 +36,7 @@ public:
                                                   uint8_t i_PinMode);
   static WOCO_DigitalPinMode* CreateWriteReply   ();
 
-  uint16_t GetCommand () override;
+  ECommand GetCommand () override;
 
   uint8_t GetPinNumber ();
   uint8_t GetPinMode ();

@@ -5,7 +5,7 @@
 #include <MemoryTools.h>
 
 //--------------------------------------------------------------------
-// WOCOP: WOrker COmmand
+// WOCO: WOrker COmmand
 //--------------------------------------------------------------------
 class WOCO
 {
@@ -46,6 +46,12 @@ protected:
   WOCO (bool i_MessageTypeIsReply,
         bool i_ActionIsWrite);
 
+public:
+  static ::EResult Create (ECommand i_CommandId,
+                           bool     i_MessageTypeIsReply,
+                           bool     i_ActionIsWrite,
+                           WOCO*&   o_WOCO);
+
 //==================== Public Methods ====================
 public:
   static const __FlashStringHelper* GetResultText (::EResult i_Result);
@@ -55,7 +61,7 @@ public:
   bool GetMessageTypeIsRequest ();
   bool GetMessageTypeIsReply ();
 
-  virtual uint16_t GetCommand () = 0;
+  virtual ECommand GetCommand () = 0;
   uint8_t          GetPayloadLengthExpected ();
   virtual bool     GetPayloadLengthIsVariable ();
 

@@ -1,6 +1,14 @@
 #include "WOCO_DigitalPinState.h"
 
 //--------------------------------------------------------------------
+WOCO_DigitalPinState::WOCO_DigitalPinState (bool i_MessageTypeIsReply,
+                                            bool i_ActionIsWrite)
+: WOCO (i_MessageTypeIsReply,
+        i_ActionIsWrite)
+{
+}
+
+//--------------------------------------------------------------------
 WOCO_DigitalPinState::WOCO_DigitalPinState (uint8_t i_PinNumber,
                                             bool    i_PinState,
                                             bool    i_MessageTypeIsReply,
@@ -39,9 +47,9 @@ WOCO_DigitalPinState* WOCO_DigitalPinState::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-uint16_t WOCO_DigitalPinState::GetCommand ()
+WOCO::ECommand WOCO_DigitalPinState::GetCommand ()
 {
-  return (uint16_t)ECommand::DigitalPinState;
+  return ECommand::DigitalPinState;
 }
 
 //--------------------------------------------------------------------

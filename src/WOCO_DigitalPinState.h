@@ -18,6 +18,10 @@ class WOCO_DigitalPinState
   bool    m_PinState  = false;
 
 //==================== Constructors ====================
+public:
+  WOCO_DigitalPinState (bool    i_MessageTypeIsReply,
+                        bool    i_ActionIsWrite);
+
   WOCO_DigitalPinState (uint8_t i_PinNumber,
                         bool    i_PinState,
                         bool    i_MessageTypeIsReply,
@@ -32,7 +36,7 @@ public:
                                                    bool    i_PinState);
   static WOCO_DigitalPinState* CreateWriteReply   ();
 
-  uint16_t GetCommand () override;
+  ECommand GetCommand () override;
 
   uint8_t GetPinNumber ();
   bool    GetPinState ();

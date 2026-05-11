@@ -13,6 +13,7 @@ class WOCO_AliveCheck
 : public WOCO
 {
 //==================== Constructors ====================
+public:
   WOCO_AliveCheck (bool i_MessageTypeIsReply,
                    bool i_ActionIsWrite);
 
@@ -21,7 +22,7 @@ public:
   static WOCO_AliveCheck* CreateReadRequest ();
   static WOCO_AliveCheck* CreateReadReply   ();
 
-  uint16_t GetCommand () override;
+  ECommand GetCommand () override;
 
   uint8_t GetPayloadLength_ReadRequest () override;
   uint8_t GetPayloadLength_ReadReply () override;

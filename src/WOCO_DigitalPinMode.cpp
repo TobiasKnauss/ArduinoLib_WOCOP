@@ -1,5 +1,16 @@
-#include "Arduino.h"
+#include <Arduino.h>
+
+#include <IOHelper.h>
+
 #include "WOCO_DigitalPinMode.h"
+
+//--------------------------------------------------------------------
+WOCO_DigitalPinMode::WOCO_DigitalPinMode (bool i_MessageTypeIsReply,
+                                          bool i_ActionIsWrite)
+: WOCO (i_MessageTypeIsReply,
+        i_ActionIsWrite)
+{
+}
 
 //--------------------------------------------------------------------
 WOCO_DigitalPinMode::WOCO_DigitalPinMode (uint8_t i_PinNumber,
@@ -30,9 +41,7 @@ WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateReadReply (uint8_t i_PinNumber,
 WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateWriteRequest (uint8_t i_PinNumber,
                                                               uint8_t i_PinMode)
 {
-  if (i_PinMode != INPUT
-  &&  i_PinMode != OUTPUT
-  &&  i_PinMode != INPUT_PULLUP)
+  if (!isPinModeValid (i_PinMode))
     return 0;
 
   return new WOCO_DigitalPinMode (i_PinNumber, i_PinMode, false, true);
@@ -45,9 +54,9 @@ WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-uint16_t WOCO_DigitalPinMode::GetCommand ()
+WOCO::ECommand WOCO_DigitalPinMode::GetCommand ()
 {
-  return (uint16_t)ECommand::DigitalPinMode;
+  return ECommand::DigitalPinMode;
 }
 
 //--------------------------------------------------------------------
