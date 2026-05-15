@@ -21,6 +21,36 @@ WOCO_DigitalPinState::WOCO_DigitalPinState (uint8_t i_PinNumber,
 }
 
 //--------------------------------------------------------------------
+WOCO::ECommand WOCO_DigitalPinState::get_Command ()
+{
+  return ECommand::DigitalPinState;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_DigitalPinState::get_PayloadLength_ReadRequest ()
+{
+  return 1;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_DigitalPinState::get_PayloadLength_ReadReply ()
+{
+  return 2;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_DigitalPinState::get_PinNumber ()
+{
+  return m_PinNumber;
+}
+
+//--------------------------------------------------------------------
+bool WOCO_DigitalPinState::get_PinState ()
+{
+  return m_PinState;
+}
+
+//--------------------------------------------------------------------
 WOCO_DigitalPinState* WOCO_DigitalPinState::CreateReadRequest (uint8_t i_PinNumber)
 {
   return new WOCO_DigitalPinState (i_PinNumber, false, false, false);
@@ -47,36 +77,6 @@ WOCO_DigitalPinState* WOCO_DigitalPinState::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-WOCO::ECommand WOCO_DigitalPinState::GetCommand ()
-{
-  return ECommand::DigitalPinState;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinState::GetPinNumber ()
-{
-  return m_PinNumber;
-}
-
-//--------------------------------------------------------------------
-bool WOCO_DigitalPinState::GetPinState ()
-{
-  return m_PinState;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinState::GetPayloadLength_ReadRequest ()
-{
-  return 1;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinState::GetPayloadLength_ReadReply ()
-{
-  return 2;
-}
-
-//--------------------------------------------------------------------
 ::EResult WOCO_DigitalPinState::AnalyzePayload (uint8_t* i_pPayloadBuffer,
                                                 uint8_t  i_PayloadBufferLength,
                                                 uint8_t  i_PayloadLength)
@@ -93,12 +93,12 @@ uint8_t WOCO_DigitalPinState::GetPayloadLength_ReadReply ()
   // request   1     2
   // reply     2     0
 
-  if (GetMessageTypeIsRequest ()
-  ||  GetActionIsRead ())
+  if (get_TypeIsRequest ()
+  ||  get_ActionIsRead ())
   {
     isOK &= RingBuffer_GetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinNumber);
-    if (GetMessageTypeIsReply ()
-    ||  GetActionIsWrite ())
+    if (get_TypeIsReply ()
+    ||  get_ActionIsWrite ())
       isOK &= RingBuffer_GetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinState);
   }
   if (!isOK)
@@ -118,7 +118,7 @@ uint8_t WOCO_DigitalPinState::GetPayloadLength_ReadReply ()
 
   uint8_t* pCurrent = i_pPayloadBuffer;
   RingBuffer_SetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinNumber);
-  if (GetActionIsWrite ())
+  if (get_ActionIsWrite ())
     RingBuffer_SetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinState);
 
   return ::EResult::SUCCESS;

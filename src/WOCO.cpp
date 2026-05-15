@@ -17,16 +17,16 @@ const char* const WOCO::c_EnumNames_ClassFailures[] PROGMEM =
 #undef X
 
 //--------------------------------------------------------------------
-WOCO::WOCO (bool i_MessageTypeIsReply,
+WOCO::WOCO (bool i_TypeIsReply,
             bool i_ActionIsWrite)
 {
-  m_MessageTypeIsReply = i_MessageTypeIsReply;
-  m_ActionIsWrite      = i_ActionIsWrite;
+  m_TypeIsReply   = i_TypeIsReply;
+  m_ActionIsWrite = i_ActionIsWrite;
 }
 
 //--------------------------------------------------------------------
 ::EResult WOCO::Create (ECommand i_CommandId,
-                        bool     i_MessageTypeIsReply,
+                        bool     i_TypeIsReply,
                         bool     i_ActionIsWrite,
                         WOCO*&   o_pWOCO)
 {
@@ -35,13 +35,67 @@ WOCO::WOCO (bool i_MessageTypeIsReply,
 
   switch (i_CommandId)
   {
-  case ECommand::AliveCheck:      o_pWOCO = new WOCO_AliveCheck      (i_MessageTypeIsReply, i_ActionIsWrite); break;
-  case ECommand::DigitalPinMode:  o_pWOCO = new WOCO_DigitalPinMode  (i_MessageTypeIsReply, i_ActionIsWrite); break;
-  case ECommand::DigitalPinState: o_pWOCO = new WOCO_DigitalPinState (i_MessageTypeIsReply, i_ActionIsWrite); break;
+  case ECommand::AliveCheck:      o_pWOCO = new WOCO_AliveCheck      (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::DigitalPinMode:  o_pWOCO = new WOCO_DigitalPinMode  (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::DigitalPinState: o_pWOCO = new WOCO_DigitalPinState (i_TypeIsReply, i_ActionIsWrite); break;
   default: return (::EResult)EResult::FAIL_WOCO_Command_IdInvalid;
   }
 
   return ::EResult::SUCCESS;
+}
+
+//--------------------------------------------------------------------
+bool WOCO::get_ActionIsRead ()
+{
+  return !m_ActionIsWrite;
+}
+
+//--------------------------------------------------------------------
+bool WOCO::get_ActionIsWrite ()
+{
+  return m_ActionIsWrite;
+}
+
+//--------------------------------------------------------------------
+bool WOCO::get_TypeIsRequest ()
+{
+  return !m_TypeIsReply;
+}
+
+//--------------------------------------------------------------------
+bool WOCO::get_TypeIsReply ()
+{
+  return m_TypeIsReply;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO::get_PayloadLengthExpected ()
+{
+  return m_TypeIsReply
+         ? m_ActionIsWrite
+           ? get_PayloadLength_WriteReply ()
+           : get_PayloadLength_ReadReply ()
+         : m_ActionIsWrite
+           ? get_PayloadLength_WriteRequest ()
+           : get_PayloadLength_ReadRequest ();
+}
+
+//--------------------------------------------------------------------
+bool WOCO::get_PayloadLengthIsVariable ()
+{
+  return false;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO::get_PayloadLength_WriteRequest ()
+{
+  return get_PayloadLength_ReadReply ();
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO::get_PayloadLength_WriteReply ()
+{
+  return 0;
 }
 
 //--------------------------------------------------------------------
@@ -50,60 +104,6 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
   if ((uint16_t)i_Result < (uint16_t)EResult::Dummy_FirstClassFailure)
     return Result::GetText (i_Result);
   return (const __FlashStringHelper*)pgm_read_ptr(&c_EnumNames_ClassFailures[(uint16_t)i_Result - (uint16_t)EResult::Dummy_FirstClassFailure - 1]);
-}
-
-//--------------------------------------------------------------------
-bool WOCO::GetActionIsRead ()
-{
-  return !m_ActionIsWrite;
-}
-
-//--------------------------------------------------------------------
-bool WOCO::GetActionIsWrite ()
-{
-  return m_ActionIsWrite;
-}
-
-//--------------------------------------------------------------------
-bool WOCO::GetMessageTypeIsRequest ()
-{
-  return !m_MessageTypeIsReply;
-}
-
-//--------------------------------------------------------------------
-bool WOCO::GetMessageTypeIsReply ()
-{
-  return m_MessageTypeIsReply;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO::GetPayloadLengthExpected ()
-{
-  return m_MessageTypeIsReply
-         ? m_ActionIsWrite
-           ? GetPayloadLength_WriteReply ()
-           : GetPayloadLength_ReadReply ()
-         : m_ActionIsWrite
-           ? GetPayloadLength_WriteRequest ()
-           : GetPayloadLength_ReadRequest ();
-}
-
-//--------------------------------------------------------------------
-bool WOCO::GetPayloadLengthIsVariable ()
-{
-  return false;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO::GetPayloadLength_WriteRequest ()
-{
-  return GetPayloadLength_ReadReply ();
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO::GetPayloadLength_WriteReply ()
-{
-  return 0;
 }
 
 //--------------------------------------------------------------------
@@ -117,8 +117,8 @@ uint8_t WOCO::GetPayloadLength_WriteReply ()
   if (i_PayloadLength > i_PayloadBufferLength)
     return ::EResult::FAIL_Buffer_TooSmall;
 
-  uint8_t expectedLength = GetPayloadLengthExpected ();
-  if (GetPayloadLengthIsVariable ())
+  uint8_t expectedLength = get_PayloadLengthExpected ();
+  if (get_PayloadLengthIsVariable ())
   {
     if (i_PayloadLength < expectedLength)
       return (::EResult)EResult::FAIL_WOCO_Payload_LengthWrong;
@@ -140,7 +140,7 @@ uint8_t WOCO::GetPayloadLength_WriteReply ()
   if (i_pPayloadBuffer == 0)
     return ::EResult::FAIL_Pointer_IsZero;
 
-  uint8_t expectedLength = GetPayloadLengthExpected ();
+  uint8_t expectedLength = get_PayloadLengthExpected ();
   if (i_PayloadBufferLength < expectedLength)
     return ::EResult::FAIL_Buffer_TooSmall;
 

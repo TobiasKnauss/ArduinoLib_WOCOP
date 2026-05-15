@@ -38,37 +38,46 @@ private:
   #include "WOCO_failures.h"
   #undef X
 
-  bool m_ActionIsWrite      = false;
-  bool m_MessageTypeIsReply = false;
+  bool m_ActionIsWrite = false;
+  bool m_TypeIsReply   = false;
 
 //==================== Constructors ====================
 protected:
-  WOCO (bool i_MessageTypeIsReply,
+  WOCO (bool i_TypeIsReply,
         bool i_ActionIsWrite);
 
 public:
   static ::EResult Create (ECommand i_CommandId,
-                           bool     i_MessageTypeIsReply,
+                           bool     i_TypeIsReply,
                            bool     i_ActionIsWrite,
-                           WOCO*&   o_WOCO);
+                           WOCO*&   o_pWOCO);
+
+//==================== Properties ====================
+public:
+  //-------------------- instance --------------------
+
+  virtual ECommand get_Command () = 0;
+
+  bool get_ActionIsRead ();
+  bool get_ActionIsWrite ();
+  bool get_TypeIsRequest ();
+  bool get_TypeIsReply ();
+
+  uint8_t         get_PayloadLengthExpected ();
+  virtual bool    get_PayloadLengthIsVariable ();
+
+  virtual uint8_t get_PayloadLength_ReadRequest () = 0;
+  virtual uint8_t get_PayloadLength_ReadReply () = 0;
+  virtual uint8_t get_PayloadLength_WriteRequest ();
+  virtual uint8_t get_PayloadLength_WriteReply ();
 
 //==================== Public Methods ====================
 public:
+  //-------------------- static --------------------
+
   static const __FlashStringHelper* GetResultText (::EResult i_Result);
 
-  bool GetActionIsRead ();
-  bool GetActionIsWrite ();
-  bool GetMessageTypeIsRequest ();
-  bool GetMessageTypeIsReply ();
-
-  virtual ECommand GetCommand () = 0;
-  uint8_t          GetPayloadLengthExpected ();
-  virtual bool     GetPayloadLengthIsVariable ();
-
-  virtual uint8_t GetPayloadLength_ReadRequest () = 0;
-  virtual uint8_t GetPayloadLength_ReadReply () = 0;
-  virtual uint8_t GetPayloadLength_WriteRequest ();
-  virtual uint8_t GetPayloadLength_WriteReply ();
+  //-------------------- instance --------------------
 
   virtual ::EResult AnalyzePayload (uint8_t* i_pPayloadBuffer,
                                     uint8_t  i_PayloadBufferLength,

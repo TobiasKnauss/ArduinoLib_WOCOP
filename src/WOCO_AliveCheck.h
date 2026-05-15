@@ -17,15 +17,23 @@ public:
   WOCO_AliveCheck (bool i_MessageTypeIsReply,
                    bool i_ActionIsWrite);
 
+//==================== Properties ====================
+public:
+  //-------------------- instance --------------------
+
+  ECommand get_Command () override;
+
+  uint8_t get_PayloadLength_ReadRequest () override;
+  uint8_t get_PayloadLength_ReadReply () override;
+
 //==================== Public Methods ====================
 public:
+  //-------------------- static --------------------
+
   static WOCO_AliveCheck* CreateReadRequest ();
   static WOCO_AliveCheck* CreateReadReply   ();
 
-  ECommand GetCommand () override;
-
-  uint8_t GetPayloadLength_ReadRequest () override;
-  uint8_t GetPayloadLength_ReadReply () override;
+  //-------------------- instance --------------------
 
   ::EResult AnalyzePayload (uint8_t* i_pPayloadBuffer,
                             uint8_t  i_PayloadBufferLength,

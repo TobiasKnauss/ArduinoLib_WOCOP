@@ -9,6 +9,24 @@ WOCO_AliveCheck::WOCO_AliveCheck (bool i_MessageTypeIsReply,
 }
 
 //--------------------------------------------------------------------
+WOCO::ECommand WOCO_AliveCheck::get_Command ()
+{
+  return ECommand::AliveCheck;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_AliveCheck::get_PayloadLength_ReadRequest ()
+{
+  return 0;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_AliveCheck::get_PayloadLength_ReadReply ()
+{
+  return 0;
+}
+
+//--------------------------------------------------------------------
 WOCO_AliveCheck* WOCO_AliveCheck::CreateReadRequest ()
 {
   return new WOCO_AliveCheck (false, false);
@@ -18,24 +36,6 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadRequest ()
 WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 {
   return new WOCO_AliveCheck (false, false);
-}
-
-//--------------------------------------------------------------------
-WOCO::ECommand WOCO_AliveCheck::GetCommand ()
-{
-  return ECommand::AliveCheck;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_AliveCheck::GetPayloadLength_ReadRequest ()
-{
-  return 0;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_AliveCheck::GetPayloadLength_ReadReply ()
-{
-  return 0;
 }
 
 //--------------------------------------------------------------------

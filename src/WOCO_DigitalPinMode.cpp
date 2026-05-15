@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include <IOHelper.h>
 
 #include "WOCO_DigitalPinMode.h"
@@ -22,6 +20,36 @@ WOCO_DigitalPinMode::WOCO_DigitalPinMode (uint8_t i_PinNumber,
 {
   m_PinNumber = i_PinNumber;
   m_PinMode   = i_PinMode;
+}
+
+//--------------------------------------------------------------------
+WOCO::ECommand WOCO_DigitalPinMode::get_Command ()
+{
+  return ECommand::DigitalPinMode;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_DigitalPinMode::get_PayloadLength_ReadRequest ()
+{
+  return 1;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_DigitalPinMode::get_PayloadLength_ReadReply ()
+{
+  return 2;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_DigitalPinMode::get_PinNumber ()
+{
+  return m_PinNumber;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_DigitalPinMode::get_PinMode ()
+{
+  return m_PinMode;
 }
 
 //--------------------------------------------------------------------
@@ -54,36 +82,6 @@ WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-WOCO::ECommand WOCO_DigitalPinMode::GetCommand ()
-{
-  return ECommand::DigitalPinMode;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinMode::GetPinNumber ()
-{
-  return m_PinNumber;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinMode::GetPinMode ()
-{
-  return m_PinMode;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinMode::GetPayloadLength_ReadRequest ()
-{
-  return 1;
-}
-
-//--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinMode::GetPayloadLength_ReadReply ()
-{
-  return 2;
-}
-
-//--------------------------------------------------------------------
 ::EResult WOCO_DigitalPinMode::AnalyzePayload (uint8_t* i_pPayloadBuffer,
                                                uint8_t  i_PayloadBufferLength,
                                                uint8_t  i_PayloadLength)
@@ -100,12 +98,12 @@ uint8_t WOCO_DigitalPinMode::GetPayloadLength_ReadReply ()
   // request   1     2
   // reply     2     0
 
-  if (GetMessageTypeIsRequest ()
-  ||  GetActionIsRead ())
+  if (get_TypeIsRequest ()
+  ||  get_ActionIsRead ())
   {
     isOK &= RingBuffer_GetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinNumber);
-    if (GetMessageTypeIsReply ()
-    ||  GetActionIsWrite ())
+    if (get_TypeIsReply ()
+    ||  get_ActionIsWrite ())
       isOK &= RingBuffer_GetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinMode);
   }
   if (!isOK)
@@ -125,7 +123,7 @@ uint8_t WOCO_DigitalPinMode::GetPayloadLength_ReadReply ()
 
   uint8_t* pCurrent = i_pPayloadBuffer;
   RingBuffer_SetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinNumber);
-  if (GetActionIsWrite ())
+  if (get_ActionIsWrite ())
     RingBuffer_SetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinMode);
 
   return ::EResult::SUCCESS;

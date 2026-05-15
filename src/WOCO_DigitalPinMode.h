@@ -27,8 +27,22 @@ public:
                        bool    i_MessageTypeIsReply,
                        bool    i_ActionIsWrite);
 
+//==================== Properties ====================
+public:
+  //-------------------- instance --------------------
+
+  ECommand get_Command () override;
+
+  uint8_t get_PayloadLength_ReadRequest () override;
+  uint8_t get_PayloadLength_ReadReply () override;
+
+  uint8_t get_PinNumber ();
+  uint8_t get_PinMode ();
+
 //==================== Public Methods ====================
 public:
+  //-------------------- static --------------------
+
   static WOCO_DigitalPinMode* CreateReadRequest  (uint8_t i_PinNumber);
   static WOCO_DigitalPinMode* CreateReadReply    (uint8_t i_PinNumber,
                                                   uint8_t i_PinMode);
@@ -36,13 +50,7 @@ public:
                                                   uint8_t i_PinMode);
   static WOCO_DigitalPinMode* CreateWriteReply   ();
 
-  ECommand GetCommand () override;
-
-  uint8_t GetPinNumber ();
-  uint8_t GetPinMode ();
-
-  uint8_t GetPayloadLength_ReadRequest () override;
-  uint8_t GetPayloadLength_ReadReply () override;
+  //-------------------- instance --------------------
 
   ::EResult AnalyzePayload (uint8_t* i_pPayloadBuffer,
                             uint8_t  i_PayloadBufferLength,
