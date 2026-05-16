@@ -17,20 +17,12 @@ const char* const WOCO::c_EnumNames_ClassFailures[] PROGMEM =
 #undef X
 
 //--------------------------------------------------------------------
-WOCO::WOCO (bool i_TypeIsReply,
-            bool i_ActionIsWrite)
-{
-  m_TypeIsReply   = i_TypeIsReply;
-  m_ActionIsWrite = i_ActionIsWrite;
-}
-
-//--------------------------------------------------------------------
 ::EResult WOCO::Create (ECommand i_CommandId,
                         bool     i_TypeIsReply,
                         bool     i_ActionIsWrite,
                         WOCO*&   o_pWOCO)
 {
-  if (o_pWOCO != 0)
+  if (o_pWOCO != nullptr)
     return (::EResult)EResult::FAIL_WOCO_Command_Exists;
 
   switch (i_CommandId)
@@ -42,6 +34,14 @@ WOCO::WOCO (bool i_TypeIsReply,
   }
 
   return ::EResult::SUCCESS;
+}
+
+//--------------------------------------------------------------------
+WOCO::WOCO (bool i_TypeIsReply,
+            bool i_ActionIsWrite)
+{
+  m_TypeIsReply   = i_TypeIsReply;
+  m_ActionIsWrite = i_ActionIsWrite;
 }
 
 //--------------------------------------------------------------------
@@ -111,9 +111,8 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
                                     uint8_t  i_CommandDataBufferLength,
                                     uint8_t  i_CommandDataLength)
 {
-  if (i_pCommandDataBuffer == 0)
+  if (i_pCommandDataBuffer == nullptr)
     return ::EResult::FAIL_Pointer_IsZero;
-
   if (i_CommandDataLength > i_CommandDataBufferLength)
     return ::EResult::FAIL_Buffer_TooSmall;
 
@@ -137,7 +136,7 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
                                     uint8_t  i_CommandDataBufferLength,
                                     uint8_t& o_CommandDataLength)
 {
-  if (i_pCommandDataBuffer == 0)
+  if (i_pCommandDataBuffer == nullptr)
     return ::EResult::FAIL_Pointer_IsZero;
 
   uint8_t expectedLength = get_CommandData_ExpectedLength ();

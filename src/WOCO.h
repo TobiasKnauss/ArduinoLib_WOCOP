@@ -31,26 +31,42 @@ public:
   };
 
 //==================== Fields ====================
+public:
+  //-------------------- static --------------------
+
+  static const bool ACTION_Read  = false;
+  static const bool ACTION_Write = true;
+  static const bool TYPE_Reply   = true;
+  static const bool TYPE_Request = false;
+
 private:
+  //-------------------- static --------------------
+
   static const char* const c_EnumNames_ClassFailures[] PROGMEM;
 
   #define X(name) static const char _EResult_##name[] PROGMEM;
   #include "WOCO_failures.h"
   #undef X
 
+  //-------------------- instance --------------------
+
   bool m_ActionIsWrite = false;
   bool m_TypeIsReply   = false;
 
 //==================== Constructors ====================
-protected:
-  WOCO (bool i_TypeIsReply,
-        bool i_ActionIsWrite);
-
 public:
+  //-------------------- static --------------------
+
   static ::EResult Create (ECommand i_CommandId,
                            bool     i_TypeIsReply,
                            bool     i_ActionIsWrite,
                            WOCO*&   o_pWOCO);
+
+protected:
+  //-------------------- instance --------------------
+
+  WOCO (bool i_TypeIsReply,
+        bool i_ActionIsWrite);
 
 //==================== Properties ====================
 public:

@@ -3,19 +3,19 @@
 #include "WOCO_DigitalPinMode.h"
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinMode::WOCO_DigitalPinMode (bool i_MessageTypeIsReply,
+WOCO_DigitalPinMode::WOCO_DigitalPinMode (bool i_TypeIsReply,
                                           bool i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
 }
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinMode::WOCO_DigitalPinMode (uint8_t i_PinNumber,
-                                          uint8_t i_PinMode,
-                                          bool    i_MessageTypeIsReply,
-                                          bool    i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+WOCO_DigitalPinMode::WOCO_DigitalPinMode (bool    i_TypeIsReply,
+                                          bool    i_ActionIsWrite,
+                                          uint8_t i_PinNumber,
+                                          uint8_t i_PinMode)
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
   m_PinNumber = i_PinNumber;
@@ -55,14 +55,14 @@ uint8_t WOCO_DigitalPinMode::get_PinMode ()
 //--------------------------------------------------------------------
 WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateReadRequest (uint8_t i_PinNumber)
 {
-  return new WOCO_DigitalPinMode (i_PinNumber, 0, false, false);
+  return new WOCO_DigitalPinMode (TYPE_Request, ACTION_Read, i_PinNumber, 0);
 }
 
 //--------------------------------------------------------------------
 WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateReadReply (uint8_t i_PinNumber,
                                                            uint8_t i_PinMode)
 {
-  return new WOCO_DigitalPinMode (i_PinNumber, i_PinMode, true, false);
+  return new WOCO_DigitalPinMode (TYPE_Reply, ACTION_Read, i_PinNumber, i_PinMode);
 }
 
 //--------------------------------------------------------------------
@@ -70,15 +70,15 @@ WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateWriteRequest (uint8_t i_PinNumbe
                                                               uint8_t i_PinMode)
 {
   if (!isPinModeValid (i_PinMode))
-    return 0;
+    return nullptr;
 
-  return new WOCO_DigitalPinMode (i_PinNumber, i_PinMode, false, true);
+  return new WOCO_DigitalPinMode (TYPE_Request, ACTION_Write, i_PinNumber, i_PinMode);
 }
 
 //--------------------------------------------------------------------
 WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateWriteReply ()
 {
-  return new WOCO_DigitalPinMode (0, 0, true, true);
+  return new WOCO_DigitalPinMode (TYPE_Reply, ACTION_Write, 0, 0);
 }
 
 //--------------------------------------------------------------------

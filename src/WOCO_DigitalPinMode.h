@@ -19,18 +19,23 @@ class WOCO_DigitalPinMode
 : public WOCO
 {
 //==================== Fields ====================
+private:
+  //-------------------- instance --------------------
+
   uint8_t m_PinNumber = 0;
   uint8_t m_PinMode   = 0;
 
 //==================== Constructors ====================
 public:
-  WOCO_DigitalPinMode (bool    i_MessageTypeIsReply,
+  //-------------------- instance --------------------
+
+  WOCO_DigitalPinMode (bool    i_TypeIsReply,
                        bool    i_ActionIsWrite);
 
-  WOCO_DigitalPinMode (uint8_t i_PinNumber,
-                       uint8_t i_PinMode,
-                       bool    i_MessageTypeIsReply,
-                       bool    i_ActionIsWrite);
+  WOCO_DigitalPinMode (bool    i_TypeIsReply,
+                       bool    i_ActionIsWrite,
+                       uint8_t i_PinNumber,
+                       uint8_t i_PinMode);
 
 //==================== Properties ====================
 public:

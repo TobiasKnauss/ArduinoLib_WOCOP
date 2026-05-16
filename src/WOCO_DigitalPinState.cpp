@@ -1,19 +1,19 @@
 #include "WOCO_DigitalPinState.h"
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinState::WOCO_DigitalPinState (bool i_MessageTypeIsReply,
+WOCO_DigitalPinState::WOCO_DigitalPinState (bool i_TypeIsReply,
                                             bool i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
 }
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinState::WOCO_DigitalPinState (uint8_t i_PinNumber,
-                                            bool    i_PinState,
-                                            bool    i_MessageTypeIsReply,
-                                            bool    i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+WOCO_DigitalPinState::WOCO_DigitalPinState (bool    i_TypeIsReply,
+                                            bool    i_ActionIsWrite,
+                                            uint8_t i_PinNumber,
+                                            bool    i_PinState)
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
   m_PinNumber = i_PinNumber;
@@ -53,27 +53,27 @@ bool WOCO_DigitalPinState::get_PinState ()
 //--------------------------------------------------------------------
 WOCO_DigitalPinState* WOCO_DigitalPinState::CreateReadRequest (uint8_t i_PinNumber)
 {
-  return new WOCO_DigitalPinState (i_PinNumber, false, false, false);
+  return new WOCO_DigitalPinState (TYPE_Request, ACTION_Read, i_PinNumber, LOW);
 }
 
 //--------------------------------------------------------------------
 WOCO_DigitalPinState* WOCO_DigitalPinState::CreateReadReply (uint8_t i_PinNumber,
                                                              bool    i_PinState)
 {
-  return new WOCO_DigitalPinState (i_PinNumber, i_PinState, true, false);
+  return new WOCO_DigitalPinState (TYPE_Reply, ACTION_Read, i_PinNumber, i_PinState);
 }
 
 //--------------------------------------------------------------------
 WOCO_DigitalPinState* WOCO_DigitalPinState::CreateWriteRequest (uint8_t i_PinNumber,
                                                                 bool    i_PinState)
 {
-  return new WOCO_DigitalPinState (i_PinNumber, i_PinState, false, true);
+  return new WOCO_DigitalPinState (TYPE_Request, ACTION_Write, i_PinNumber, i_PinState);
 }
 
 //--------------------------------------------------------------------
 WOCO_DigitalPinState* WOCO_DigitalPinState::CreateWriteReply ()
 {
-  return new WOCO_DigitalPinState (0, false, true, true);
+  return new WOCO_DigitalPinState (TYPE_Reply, ACTION_Write, 0, LOW);
 }
 
 //--------------------------------------------------------------------

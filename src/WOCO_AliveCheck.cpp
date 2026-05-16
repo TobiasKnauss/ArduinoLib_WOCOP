@@ -1,9 +1,9 @@
 #include "WOCO_AliveCheck.h"
 
 //--------------------------------------------------------------------
-WOCO_AliveCheck::WOCO_AliveCheck (bool i_MessageTypeIsReply,
+WOCO_AliveCheck::WOCO_AliveCheck (bool i_TypeIsReply,
                                   bool i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
 }
@@ -29,13 +29,13 @@ uint8_t WOCO_AliveCheck::get_CommandDataLength_ReadReply ()
 //--------------------------------------------------------------------
 WOCO_AliveCheck* WOCO_AliveCheck::CreateReadRequest ()
 {
-  return new WOCO_AliveCheck (false, false);
+  return new WOCO_AliveCheck (TYPE_Request, ACTION_Read);
 }
 
 //--------------------------------------------------------------------
 WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 {
-  return new WOCO_AliveCheck (false, false);
+  return new WOCO_AliveCheck (TYPE_Reply, ACTION_Read);
 }
 
 //--------------------------------------------------------------------
