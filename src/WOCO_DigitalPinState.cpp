@@ -1,19 +1,19 @@
 #include "WOCO_DigitalPinState.h"
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinState::WOCO_DigitalPinState (bool i_MessageTypeIsReply,
+WOCO_DigitalPinState::WOCO_DigitalPinState (bool i_TypeIsReply,
                                             bool i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
 }
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinState::WOCO_DigitalPinState (uint8_t i_PinNumber,
-                                            bool    i_PinState,
-                                            bool    i_MessageTypeIsReply,
-                                            bool    i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+WOCO_DigitalPinState::WOCO_DigitalPinState (bool    i_TypeIsReply,
+                                            bool    i_ActionIsWrite,
+                                            uint8_t i_PinNumber,
+                                            bool    i_PinState)
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
   m_PinNumber = i_PinNumber;

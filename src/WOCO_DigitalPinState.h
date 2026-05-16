@@ -24,13 +24,13 @@ class WOCO_DigitalPinState
 
 //==================== Constructors ====================
 public:
-  WOCO_DigitalPinState (bool    i_MessageTypeIsReply,
+  WOCO_DigitalPinState (bool    i_TypeIsReply,
                         bool    i_ActionIsWrite);
 
-  WOCO_DigitalPinState (uint8_t i_PinNumber,
-                        bool    i_PinState,
-                        bool    i_MessageTypeIsReply,
-                        bool    i_ActionIsWrite);
+  WOCO_DigitalPinState (bool    i_TypeIsReply,
+                        bool    i_ActionIsWrite,
+                        uint8_t i_PinNumber,
+                        bool    i_PinState);
 
 //==================== Properties ====================
 public:

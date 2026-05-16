@@ -3,19 +3,19 @@
 #include "WOCO_DigitalPinMode.h"
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinMode::WOCO_DigitalPinMode (bool i_MessageTypeIsReply,
+WOCO_DigitalPinMode::WOCO_DigitalPinMode (bool i_TypeIsReply,
                                           bool i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
 }
 
 //--------------------------------------------------------------------
-WOCO_DigitalPinMode::WOCO_DigitalPinMode (uint8_t i_PinNumber,
-                                          uint8_t i_PinMode,
-                                          bool    i_MessageTypeIsReply,
-                                          bool    i_ActionIsWrite)
-: WOCO (i_MessageTypeIsReply,
+WOCO_DigitalPinMode::WOCO_DigitalPinMode (bool    i_TypeIsReply,
+                                          bool    i_ActionIsWrite,
+                                          uint8_t i_PinNumber,
+                                          uint8_t i_PinMode)
+: WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
   m_PinNumber = i_PinNumber;

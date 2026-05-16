@@ -14,7 +14,7 @@ class WOCO_AliveCheck
 {
 //==================== Constructors ====================
 public:
-  WOCO_AliveCheck (bool i_MessageTypeIsReply,
+  WOCO_AliveCheck (bool i_TypeIsReply,
                    bool i_ActionIsWrite);
 
 //==================== Properties ====================

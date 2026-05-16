@@ -24,13 +24,13 @@ class WOCO_DigitalPinMode
 
 //==================== Constructors ====================
 public:
-  WOCO_DigitalPinMode (bool    i_MessageTypeIsReply,
+  WOCO_DigitalPinMode (bool    i_TypeIsReply,
                        bool    i_ActionIsWrite);
 
-  WOCO_DigitalPinMode (uint8_t i_PinNumber,
-                       uint8_t i_PinMode,
-                       bool    i_MessageTypeIsReply,
-                       bool    i_ActionIsWrite);
+  WOCO_DigitalPinMode (bool    i_TypeIsReply,
+                       bool    i_ActionIsWrite,
+                       uint8_t i_PinNumber,
+                       uint8_t i_PinMode);
 
 //==================== Properties ====================
 public:
