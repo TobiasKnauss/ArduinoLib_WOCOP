@@ -69,31 +69,31 @@ bool WOCO::get_TypeIsReply ()
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO::get_PayloadLengthExpected ()
+uint8_t WOCO::get_CommandData_ExpectedLength ()
 {
   return m_TypeIsReply
          ? m_ActionIsWrite
-           ? get_PayloadLength_WriteReply ()
-           : get_PayloadLength_ReadReply ()
+           ? get_CommandDataLength_WriteReply ()
+           : get_CommandDataLength_ReadReply ()
          : m_ActionIsWrite
-           ? get_PayloadLength_WriteRequest ()
-           : get_PayloadLength_ReadRequest ();
+           ? get_CommandDataLength_WriteRequest ()
+           : get_CommandDataLength_ReadRequest ();
 }
 
 //--------------------------------------------------------------------
-bool WOCO::get_PayloadLengthIsVariable ()
+bool WOCO::get_CommandData_IsLengthVariable ()
 {
   return false;
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO::get_PayloadLength_WriteRequest ()
+uint8_t WOCO::get_CommandDataLength_WriteRequest ()
 {
-  return get_PayloadLength_ReadReply ();
+  return get_CommandDataLength_ReadReply ();
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO::get_PayloadLength_WriteReply ()
+uint8_t WOCO::get_CommandDataLength_WriteReply ()
 {
   return 0;
 }
@@ -107,44 +107,44 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO::AnalyzePayload (uint8_t* i_pPayloadBuffer,
-                                uint8_t  i_PayloadBufferLength,
-                                uint8_t  i_PayloadLength)
+::EResult WOCO::AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
+                                    uint8_t  i_CommandDataBufferLength,
+                                    uint8_t  i_CommandDataLength)
 {
-  if (i_pPayloadBuffer == 0)
+  if (i_pCommandDataBuffer == 0)
     return ::EResult::FAIL_Pointer_IsZero;
 
-  if (i_PayloadLength > i_PayloadBufferLength)
+  if (i_CommandDataLength > i_CommandDataBufferLength)
     return ::EResult::FAIL_Buffer_TooSmall;
 
-  uint8_t expectedLength = get_PayloadLengthExpected ();
-  if (get_PayloadLengthIsVariable ())
+  uint8_t expectedLength = get_CommandData_ExpectedLength ();
+  if (get_CommandData_IsLengthVariable ())
   {
-    if (i_PayloadLength < expectedLength)
-      return (::EResult)EResult::FAIL_WOCO_Payload_LengthWrong;
+    if (i_CommandDataLength < expectedLength)
+      return (::EResult)EResult::FAIL_WOCO_CommandData_LengthWrong;
   }
   else
   {
-    if (i_PayloadLength != expectedLength)
-      return (::EResult)EResult::FAIL_WOCO_Payload_LengthWrong;
+    if (i_CommandDataLength != expectedLength)
+      return (::EResult)EResult::FAIL_WOCO_CommandData_LengthWrong;
   }
 
   return ::EResult::SUCCESS;
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO::ComposePayload (uint8_t* i_pPayloadBuffer,
-                                uint8_t  i_PayloadBufferLength,
-                                uint8_t& o_PayloadLength)
+::EResult WOCO::ComposeCommandData (uint8_t* i_pCommandDataBuffer,
+                                    uint8_t  i_CommandDataBufferLength,
+                                    uint8_t& o_CommandDataLength)
 {
-  if (i_pPayloadBuffer == 0)
+  if (i_pCommandDataBuffer == 0)
     return ::EResult::FAIL_Pointer_IsZero;
 
-  uint8_t expectedLength = get_PayloadLengthExpected ();
-  if (i_PayloadBufferLength < expectedLength)
+  uint8_t expectedLength = get_CommandData_ExpectedLength ();
+  if (i_CommandDataBufferLength < expectedLength)
     return ::EResult::FAIL_Buffer_TooSmall;
 
-  o_PayloadLength = 0;
+  o_CommandDataLength = 0;
 
   return ::EResult::SUCCESS;
 }

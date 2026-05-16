@@ -27,13 +27,13 @@ WOCO::ECommand WOCO_DigitalPinState::get_Command ()
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinState::get_PayloadLength_ReadRequest ()
+uint8_t WOCO_DigitalPinState::get_CommandDataLength_ReadRequest ()
 {
   return 1;
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinState::get_PayloadLength_ReadReply ()
+uint8_t WOCO_DigitalPinState::get_CommandDataLength_ReadReply ()
 {
   return 2;
 }
@@ -77,29 +77,24 @@ WOCO_DigitalPinState* WOCO_DigitalPinState::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DigitalPinState::AnalyzePayload (uint8_t* i_pPayloadBuffer,
-                                                uint8_t  i_PayloadBufferLength,
-                                                uint8_t  i_PayloadLength)
+::EResult WOCO_DigitalPinState::AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
+                                                    uint8_t  i_CommandDataBufferLength,
+                                                    uint8_t  i_CommandDataLength)
 {
-  ::EResult result = WOCO::AnalyzePayload (i_pPayloadBuffer, i_PayloadBufferLength, i_PayloadLength);
+  ::EResult result = WOCO::AnalyzeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
 
   bool isOK = true;
-  uint8_t* pCurrent = i_pPayloadBuffer;
-
-  // payload size combinations
-  //         read  write
-  // request   1     2
-  // reply     2     0
+  uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsRequest ()
   ||  get_ActionIsRead ())
   {
-    isOK &= RingBuffer_GetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinNumber);
+    isOK &= RingBuffer_GetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinNumber);
     if (get_TypeIsReply ()
     ||  get_ActionIsWrite ())
-      isOK &= RingBuffer_GetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinState);
+      isOK &= RingBuffer_GetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinState);
   }
   if (!isOK)
     return ::EResult::FAIL_Buffer_GetValue;
@@ -108,18 +103,18 @@ WOCO_DigitalPinState* WOCO_DigitalPinState::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DigitalPinState::ComposePayload (uint8_t* i_pPayloadBuffer,
-                                                uint8_t  i_PayloadBufferLength,
-                                                uint8_t& o_PayloadLength)
+::EResult WOCO_DigitalPinState::ComposeCommandData (uint8_t* i_pCommandDataBuffer,
+                                                    uint8_t  i_CommandDataBufferLength,
+                                                    uint8_t& o_CommandDataLength)
 {
-  ::EResult result = WOCO::ComposePayload (i_pPayloadBuffer, i_PayloadBufferLength, o_PayloadLength);
+  ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
 
-  uint8_t* pCurrent = i_pPayloadBuffer;
-  RingBuffer_SetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinNumber);
+  uint8_t* pCurrent = i_pCommandDataBuffer;
+  RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinNumber);
   if (get_ActionIsWrite ())
-    RingBuffer_SetValueAndMovePtr (i_pPayloadBuffer, i_PayloadBufferLength, pCurrent, m_PinState);
+    RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinState);
 
   return ::EResult::SUCCESS;
 }

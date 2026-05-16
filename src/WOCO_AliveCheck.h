@@ -7,7 +7,7 @@
 // Worker Command: Read Alive Check
 //--------------------------------------------------------------------
 //  Offset  Length  Data
-//  --- no payload ---
+//  --- no command data ---
 //--------------------------------------------------------------------
 class WOCO_AliveCheck
 : public WOCO
@@ -23,8 +23,8 @@ public:
 
   ECommand get_Command () override;
 
-  uint8_t get_PayloadLength_ReadRequest () override;
-  uint8_t get_PayloadLength_ReadReply () override;
+  uint8_t get_CommandDataLength_ReadRequest () override;
+  uint8_t get_CommandDataLength_ReadReply () override;
 
 //==================== Public Methods ====================
 public:
@@ -35,12 +35,12 @@ public:
 
   //-------------------- instance --------------------
 
-  ::EResult AnalyzePayload (uint8_t* i_pPayloadBuffer,
-                            uint8_t  i_PayloadBufferLength,
-                            uint8_t  i_PayloadLength) override;
-  ::EResult ComposePayload (uint8_t* i_pPayloadBuffer,
-                            uint8_t  i_PayloadBufferLength,
-                            uint8_t& o_PayloadLength) override;
+  ::EResult AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
+                                uint8_t  i_CommandDataBufferLength,
+                                uint8_t  i_CommandDataLength) override;
+  ::EResult ComposeCommandData (uint8_t* i_pCommandDataBuffer,
+                                uint8_t  i_CommandDataBufferLength,
+                                uint8_t& o_CommandDataLength) override;
 };
 
 #endif

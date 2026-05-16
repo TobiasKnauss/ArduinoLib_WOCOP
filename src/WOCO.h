@@ -63,13 +63,13 @@ public:
   bool get_TypeIsRequest ();
   bool get_TypeIsReply ();
 
-  uint8_t         get_PayloadLengthExpected ();
-  virtual bool    get_PayloadLengthIsVariable ();
+  uint8_t         get_CommandData_ExpectedLength ();
+  virtual bool    get_CommandData_IsLengthVariable ();
 
-  virtual uint8_t get_PayloadLength_ReadRequest () = 0;
-  virtual uint8_t get_PayloadLength_ReadReply () = 0;
-  virtual uint8_t get_PayloadLength_WriteRequest ();
-  virtual uint8_t get_PayloadLength_WriteReply ();
+  virtual uint8_t get_CommandDataLength_ReadRequest () = 0;
+  virtual uint8_t get_CommandDataLength_ReadReply () = 0;
+  virtual uint8_t get_CommandDataLength_WriteRequest ();
+  virtual uint8_t get_CommandDataLength_WriteReply ();
 
 //==================== Public Methods ====================
 public:
@@ -79,12 +79,12 @@ public:
 
   //-------------------- instance --------------------
 
-  virtual ::EResult AnalyzePayload (uint8_t* i_pPayloadBuffer,
-                                    uint8_t  i_PayloadBufferLength,
-                                    uint8_t  i_PayloadLength);
-  virtual ::EResult ComposePayload (uint8_t* i_pPayloadBuffer,
-                                    uint8_t  i_PayloadBufferLength,
-                                    uint8_t& o_PayloadLength);
+  virtual ::EResult AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
+                                        uint8_t  i_CommandDataBufferLength,
+                                        uint8_t  i_CommandDataLength);
+  virtual ::EResult ComposeCommandData (uint8_t* i_pCommandDataBuffer,
+                                        uint8_t  i_CommandDataBufferLength,
+                                        uint8_t& o_CommandDataLength);
 };
 
 #endif

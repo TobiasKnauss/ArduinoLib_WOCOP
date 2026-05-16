@@ -6,12 +6,36 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-WOCO			KEYWORD1
+WOCO	KEYWORD1
+WOCO_AliveCheck	KEYWORD1
+WOCO_DigitalPinMode	KEYWORD1
+WOCO_DigitalPinState	KEYWORD1
+EResult	KEYWORD1
+ECommand	KEYWORD1
+
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
+AnalyzeCommandData	KEYWORD2
+ComposeCommandData	KEYWORD2
+GetResultText	KEYWORD2
+get_ActionIsRead	KEYWORD2
+get_ActionIsWrite	KEYWORD2
+get_Command	KEYWORD2
+get_CommandData_ExpectedLength	KEYWORD2
+get_CommandData_IsLengthVariable	KEYWORD2
+get_CommandDataLength_ReadReply	KEYWORD2
+get_CommandDataLength_ReadRequest	KEYWORD2
+get_CommandDataLength_WriteReply	KEYWORD2
+get_CommandDataLength_WriteRequest	KEYWORD2
+get_TypeIsReply	KEYWORD2
+get_TypeIsRequest	KEYWORD2
+
+get_PinMode	KEYWORD2
+get_PinNumber	KEYWORD2
+get_PinState	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

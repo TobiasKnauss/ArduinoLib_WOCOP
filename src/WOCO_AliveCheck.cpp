@@ -15,13 +15,13 @@ WOCO::ECommand WOCO_AliveCheck::get_Command ()
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_AliveCheck::get_PayloadLength_ReadRequest ()
+uint8_t WOCO_AliveCheck::get_CommandDataLength_ReadRequest ()
 {
   return 0;
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_AliveCheck::get_PayloadLength_ReadReply ()
+uint8_t WOCO_AliveCheck::get_CommandDataLength_ReadReply ()
 {
   return 0;
 }
@@ -39,11 +39,11 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_AliveCheck::AnalyzePayload (uint8_t* i_pPayloadBuffer,
-                                           uint8_t  i_PayloadBufferLength,
-                                           uint8_t  i_PayloadLength)
+::EResult WOCO_AliveCheck::AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
+                                               uint8_t  i_CommandDataBufferLength,
+                                               uint8_t  i_CommandDataLength)
 {
-  ::EResult result = WOCO::AnalyzePayload(i_pPayloadBuffer, i_PayloadBufferLength, i_PayloadLength);
+  ::EResult result = WOCO::AnalyzeCommandData(i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
 
@@ -51,11 +51,11 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_AliveCheck::ComposePayload (uint8_t* i_pPayloadBuffer,
-                                           uint8_t  i_PayloadBufferLength,
-                                           uint8_t& o_PayloadLength)
+::EResult WOCO_AliveCheck::ComposeCommandData (uint8_t* i_pCommandDataBuffer,
+                                               uint8_t  i_CommandDataBufferLength,
+                                               uint8_t& o_CommandDataLength)
 {
-  ::EResult result = WOCO::ComposePayload (i_pPayloadBuffer, i_PayloadBufferLength, o_PayloadLength);
+  ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
 

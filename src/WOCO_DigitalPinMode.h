@@ -10,6 +10,11 @@
 //     0.0     1.0  Pin Number
 //     1.0     1.0  Pin Mode    (used in Read Reply, Write Request)
 //--------------------------------------------------------------------
+// command data size combinations
+//         read  write
+// request   1     2
+// reply     2     0
+//--------------------------------------------------------------------
 class WOCO_DigitalPinMode
 : public WOCO
 {
@@ -33,8 +38,8 @@ public:
 
   ECommand get_Command () override;
 
-  uint8_t get_PayloadLength_ReadRequest () override;
-  uint8_t get_PayloadLength_ReadReply () override;
+  uint8_t get_CommandDataLength_ReadRequest () override;
+  uint8_t get_CommandDataLength_ReadReply () override;
 
   uint8_t get_PinNumber ();
   uint8_t get_PinMode ();
@@ -52,12 +57,12 @@ public:
 
   //-------------------- instance --------------------
 
-  ::EResult AnalyzePayload (uint8_t* i_pPayloadBuffer,
-                            uint8_t  i_PayloadBufferLength,
-                            uint8_t  i_PayloadLength) override;
-  ::EResult ComposePayload (uint8_t* i_pPayloadBuffer,
-                            uint8_t  i_PayloadBufferLength,
-                            uint8_t& o_PayloadLength) override;
+  ::EResult AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
+                                uint8_t  i_CommandDataBufferLength,
+                                uint8_t  i_CommandDataLength) override;
+  ::EResult ComposeCommandData (uint8_t* i_pCommandDataBuffer,
+                                uint8_t  i_CommandDataBufferLength,
+                                uint8_t& o_CommandDataLength) override;
 };
 
 #endif
