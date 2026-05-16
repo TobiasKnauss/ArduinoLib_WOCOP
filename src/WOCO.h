@@ -62,6 +62,11 @@ public:
                            bool     i_ActionIsWrite,
                            WOCO*&   o_pWOCO);
 
+public:
+  //-------------------- instance --------------------
+
+  virtual ~WOCO () = default;
+
 protected:
   //-------------------- instance --------------------
 
