@@ -111,10 +111,19 @@ WOCO_DigitalPinState* WOCO_DigitalPinState::CreateWriteReply ()
   if (result != ::EResult::SUCCESS)
     return result;
 
+  bool isOK = true;
   uint8_t* pCurrent = i_pCommandDataBuffer;
-  RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinNumber);
-  if (get_ActionIsWrite ())
-    RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinState);
+
+  if (get_TypeIsRequest ()
+  ||  get_ActionIsRead ())
+  {
+    isOK &= RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinNumber);
+    if (get_TypeIsReply ()
+    ||  get_ActionIsWrite ())
+      isOK &= RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_PinState);
+  }
+  if (!isOK)
+    return ::EResult::FAIL_Buffer_SetValue;
 
   return ::EResult::SUCCESS;
 }

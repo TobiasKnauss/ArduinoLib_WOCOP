@@ -10,6 +10,8 @@ WOCO	KEYWORD1
 WOCO_AliveCheck	KEYWORD1
 WOCO_DigitalPinMode	KEYWORD1
 WOCO_DigitalPinState	KEYWORD1
+WOCO_WorkerName	KEYWORD1
+WOCO_WorkerType	KEYWORD1
 EResult	KEYWORD1
 ECommand	KEYWORD1
 
@@ -20,6 +22,7 @@ ECommand	KEYWORD1
 
 AnalyzeCommandData	KEYWORD2
 ComposeCommandData	KEYWORD2
+Create	KEYWORD2
 GetResultText	KEYWORD2
 get_ActionIsRead	KEYWORD2
 get_ActionIsWrite	KEYWORD2
@@ -36,6 +39,8 @@ get_TypeIsRequest	KEYWORD2
 get_PinMode	KEYWORD2
 get_PinNumber	KEYWORD2
 get_PinState	KEYWORD2
+get_WorkerName	KEYWORD2
+get_WorkerType	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

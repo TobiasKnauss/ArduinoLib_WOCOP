@@ -1,28 +1,38 @@
-#ifndef WOCO_AliveCheck_h
-#define WOCO_AliveCheck_h
+#ifndef WOCO_WorkerType_h
+#define WOCO_WorkerType_h
 
 #include "WOCO.h"
 
 //--------------------------------------------------------------------
-// Worker Command: Read Alive Check
+// Worker Command: Read Worker Type
 //--------------------------------------------------------------------
 //  Offset  Length  Data
-//  --- no command data ---
+//     0.0     4.0  Worker Type
 //--------------------------------------------------------------------
 // command data size combinations
 //         read  write
-// request  --    --
-// reply    --    --
+// request   0    --
+// reply     4    --
 //--------------------------------------------------------------------
-class WOCO_AliveCheck
+class WOCO_WorkerType
 : public WOCO
 {
+//==================== Fields ====================
+private:
+  //-------------------- instance --------------------
+
+  uint32_t m_WorkerType = 0;
+
 //==================== Constructors ====================
 public:
   //-------------------- instance --------------------
 
-  WOCO_AliveCheck (bool i_TypeIsReply,
+  WOCO_WorkerType (bool i_TypeIsReply,
                    bool i_ActionIsWrite);
+
+  WOCO_WorkerType (bool     i_TypeIsReply,
+                   bool     i_ActionIsWrite,
+                   uint32_t i_WorkerType);
 
 //==================== Properties ====================
 public:
@@ -33,12 +43,14 @@ public:
   uint8_t get_CommandDataLength_ReadRequest () override;
   uint8_t get_CommandDataLength_ReadReply () override;
 
+  uint32_t get_WorkerType ();
+
 //==================== Public Methods ====================
 public:
   //-------------------- static --------------------
 
-  static WOCO_AliveCheck* CreateReadRequest ();
-  static WOCO_AliveCheck* CreateReadReply   ();
+  static WOCO_WorkerType* CreateReadRequest ();
+  static WOCO_WorkerType* CreateReadReply   (uint32_t i_WorkerType);
 
   //-------------------- instance --------------------
 

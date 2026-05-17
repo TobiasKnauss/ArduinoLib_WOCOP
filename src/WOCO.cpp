@@ -2,6 +2,8 @@
 #include "WOCO_AliveCheck.h"
 #include "WOCO_DigitalPinMode.h"
 #include "WOCO_DigitalPinState.h"
+#include "WOCO_WorkerName.h"
+#include "WOCO_WorkerType.h"
 
 //--------------------------------------------------------------------
 #define X(name) const char WOCO::_EResult_##name[] PROGMEM = #name;
@@ -30,6 +32,8 @@ const char* const WOCO::c_EnumNames_ClassFailures[] PROGMEM =
   case ECommand::AliveCheck:      o_pWOCO = new WOCO_AliveCheck      (i_TypeIsReply, i_ActionIsWrite); break;
   case ECommand::DigitalPinMode:  o_pWOCO = new WOCO_DigitalPinMode  (i_TypeIsReply, i_ActionIsWrite); break;
   case ECommand::DigitalPinState: o_pWOCO = new WOCO_DigitalPinState (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::WorkerName:      o_pWOCO = new WOCO_WorkerName      (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::WorkerType:      o_pWOCO = new WOCO_WorkerType      (i_TypeIsReply, i_ActionIsWrite); break;
   default: return (::EResult)EResult::FAIL_WOCO_Command_IdInvalid;
   }
 

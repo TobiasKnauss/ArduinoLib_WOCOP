@@ -1,28 +1,39 @@
-#ifndef WOCO_AliveCheck_h
-#define WOCO_AliveCheck_h
+#ifndef WOCO_WorkerName_h
+#define WOCO_WorkerName_h
 
 #include "WOCO.h"
 
 //--------------------------------------------------------------------
-// Worker Command: Read Alive Check
+// Worker Command: Read Worker Name
 //--------------------------------------------------------------------
 //  Offset  Length  Data
-//  --- no command data ---
+//     0.0    32.0  Worker Name
 //--------------------------------------------------------------------
 // command data size combinations
 //         read  write
-// request  --    --
-// reply    --    --
+// request   0    --
+// reply    32    --
 //--------------------------------------------------------------------
-class WOCO_AliveCheck
+class WOCO_WorkerName
 : public WOCO
 {
+//==================== Fields ====================
+private:
+  //-------------------- instance --------------------
+
+  char m_WorkerName[32];
+
 //==================== Constructors ====================
 public:
   //-------------------- instance --------------------
 
-  WOCO_AliveCheck (bool i_TypeIsReply,
+  WOCO_WorkerName (bool i_TypeIsReply,
                    bool i_ActionIsWrite);
+
+  WOCO_WorkerName (bool    i_TypeIsReply,
+                   bool    i_ActionIsWrite,
+                   char*   i_pWorkerName,
+                   uint8_t i_WorkerNameLength);
 
 //==================== Properties ====================
 public:
@@ -33,12 +44,15 @@ public:
   uint8_t get_CommandDataLength_ReadRequest () override;
   uint8_t get_CommandDataLength_ReadReply () override;
 
+  char* get_WorkerName (uint8_t& o_Length);
+
 //==================== Public Methods ====================
 public:
   //-------------------- static --------------------
 
-  static WOCO_AliveCheck* CreateReadRequest ();
-  static WOCO_AliveCheck* CreateReadReply   ();
+  static WOCO_WorkerName* CreateReadRequest ();
+  static WOCO_WorkerName* CreateReadReply   (char*   i_pWorkerName,
+                                             uint8_t i_WorkerNameLength);
 
   //-------------------- instance --------------------
 
