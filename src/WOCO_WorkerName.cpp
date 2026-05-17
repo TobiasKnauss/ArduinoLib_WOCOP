@@ -19,17 +19,20 @@ WOCO_WorkerName::WOCO_WorkerName (bool    i_TypeIsReply,
         i_ActionIsWrite)
 {
   memset (m_WorkerName, 0x00, sizeof (m_WorkerName));
-
   if (i_pWorkerName != nullptr)
-  {
-    memcpy (m_WorkerName, i_pWorkerName, min (sizeof (m_WorkerName), i_WorkerNameLength));
-  }
+    memcpy (m_WorkerName, i_pWorkerName, min (sizeof (m_WorkerName) - 1, i_WorkerNameLength));
 }
 
 //--------------------------------------------------------------------
 WOCO::ECommand WOCO_WorkerName::get_Command ()
 {
   return ECommand::WorkerName;
+}
+
+//--------------------------------------------------------------------
+bool WOCO_WorkerName::get_CommandData_IsLengthVariable ()
+{
+  return true;
 }
 
 //--------------------------------------------------------------------
@@ -41,14 +44,19 @@ uint8_t WOCO_WorkerName::get_CommandDataLength_ReadRequest ()
 //--------------------------------------------------------------------
 uint8_t WOCO_WorkerName::get_CommandDataLength_ReadReply ()
 {
-  return 32;
+  return 0;
 }
 
 //--------------------------------------------------------------------
-char* WOCO_WorkerName::get_WorkerName (uint8_t& o_Length)
+char* WOCO_WorkerName::get_WorkerName ()
 {
-  o_Length = sizeof (m_WorkerName);
   return m_WorkerName;
+}
+
+//--------------------------------------------------------------------
+uint8_t WOCO_WorkerName::get_WorkerNameLength ()
+{
+  return strlen (m_WorkerName);
 }
 
 //--------------------------------------------------------------------
@@ -76,8 +84,9 @@ WOCO_WorkerName* WOCO_WorkerName::CreateReadReply (char*   i_pWorkerName,
   bool isOK = true;
   uint8_t* pCurrent = i_pCommandDataBuffer;
 
+  memset (m_WorkerName, 0x00, sizeof (m_WorkerName));
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_GetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, sizeof (m_WorkerName), (uint8_t*)m_WorkerName);
+    isOK &= RingBuffer_GetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, i_CommandDataLength, (uint8_t*)m_WorkerName);
   if (!isOK)
     return ::EResult::FAIL_Buffer_GetValue;
   
@@ -97,7 +106,7 @@ WOCO_WorkerName* WOCO_WorkerName::CreateReadReply (char*   i_pWorkerName,
   uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_SetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, sizeof (m_WorkerName), (uint8_t*)m_WorkerName);
+    isOK &= RingBuffer_SetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, get_WorkerNameLength (), (uint8_t*)get_WorkerName ());
   if (!isOK)
     return ::EResult::FAIL_Buffer_SetValue;
 

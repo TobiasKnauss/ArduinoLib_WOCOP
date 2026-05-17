@@ -41,10 +41,13 @@ public:
 
   ECommand get_Command () override;
 
+  virtual bool get_CommandData_IsLengthVariable () override;
+
   uint8_t get_CommandDataLength_ReadRequest () override;
   uint8_t get_CommandDataLength_ReadReply () override;
 
-  char* get_WorkerName (uint8_t& o_Length);
+  char*   get_WorkerName ();
+  uint8_t get_WorkerNameLength ();
 
 //==================== Public Methods ====================
 public:
