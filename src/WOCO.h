@@ -1,8 +1,9 @@
 #ifndef WOCO_h
 #define WOCO_h
 
-#include <Result.h>
 #include <MemoryTools.h>
+#include <MemoryTools_RingBuffer.h>
+#include <Result.h>
 
 //--------------------------------------------------------------------
 // WOCO: WOrker COmmand
