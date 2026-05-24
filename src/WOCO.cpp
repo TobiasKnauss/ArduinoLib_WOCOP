@@ -1,7 +1,7 @@
 #include "WOCO.h"
 #include "WOCO_AliveCheck.h"
-#include "WOCO_DigitalPinMode.h"
-#include "WOCO_DigitalPinState.h"
+#include "WOCO_DigitalIOMode.h"
+#include "WOCO_DigitalIOState.h"
 #include "WOCO_WorkerName.h"
 #include "WOCO_WorkerType.h"
 
@@ -29,10 +29,10 @@ const char* const WOCO::c_EnumNames_ClassFailures[] PROGMEM =
 
   switch (i_CommandId)
   {
-  case ECommand::AliveCheck:      o_pWOCO = new WOCO_AliveCheck      (i_TypeIsReply, i_ActionIsWrite); break;
-  case ECommand::DigitalPinMode:  o_pWOCO = new WOCO_DigitalPinMode  (i_TypeIsReply, i_ActionIsWrite); break;
-  case ECommand::DigitalPinState: o_pWOCO = new WOCO_DigitalPinState (i_TypeIsReply, i_ActionIsWrite); break;
-  case ECommand::WorkerName:      o_pWOCO = new WOCO_WorkerName      (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::AliveCheck:      o_pWOCO = new WOCO_AliveCheck     (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::DigitalIOMode:   o_pWOCO = new WOCO_DigitalIOMode  (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::DigitalIOState:  o_pWOCO = new WOCO_DigitalIOState (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::WorkerName:      o_pWOCO = new WOCO_WorkerName     (i_TypeIsReply, i_ActionIsWrite); break;
   case ECommand::WorkerType:      o_pWOCO = new WOCO_WorkerType      (i_TypeIsReply, i_ActionIsWrite); break;
   default: return (::EResult)EResult::FAIL_WOCO_Command_IdInvalid;
   }

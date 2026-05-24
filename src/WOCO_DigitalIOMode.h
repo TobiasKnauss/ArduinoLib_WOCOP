@@ -1,5 +1,5 @@
-#ifndef WOCO_DigitalPinMode_h
-#define WOCO_DigitalPinMode_h
+#ifndef WOCO_DigitalIOMode_h
+#define WOCO_DigitalIOMode_h
 
 #include "WOCO.h"
 
@@ -15,27 +15,27 @@
 // request   1     2
 // reply     2     0
 //--------------------------------------------------------------------
-class WOCO_DigitalPinMode
+class WOCO_DigitalIOMode
 : public WOCO
 {
 //==================== Fields ====================
 private:
   //-------------------- instance --------------------
 
-  uint8_t m_PinNumber = 0;
-  uint8_t m_PinMode   = 0;
+  uint8_t m_IONumber = 0;
+  uint8_t m_IOMode   = 0;
 
 //==================== Constructors ====================
 public:
   //-------------------- instance --------------------
 
-  WOCO_DigitalPinMode (bool    i_TypeIsReply,
-                       bool    i_ActionIsWrite);
+  WOCO_DigitalIOMode (bool    i_TypeIsReply,
+                      bool    i_ActionIsWrite);
 
-  WOCO_DigitalPinMode (bool    i_TypeIsReply,
-                       bool    i_ActionIsWrite,
-                       uint8_t i_PinNumber,
-                       uint8_t i_PinMode);
+  WOCO_DigitalIOMode (bool    i_TypeIsReply,
+                      bool    i_ActionIsWrite,
+                      uint8_t i_IONumber,
+                      uint8_t i_IOMode);
 
 //==================== Properties ====================
 public:
@@ -46,19 +46,19 @@ public:
   uint16_t get_CommandDataLength_ReadRequest () override;
   uint16_t get_CommandDataLength_ReadReply () override;
 
-  uint8_t get_PinNumber ();
-  uint8_t get_PinMode ();
+  uint8_t get_IONumber ();
+  uint8_t get_IOMode ();
 
 //==================== Public Methods ====================
 public:
   //-------------------- static --------------------
 
-  static WOCO_DigitalPinMode* CreateReadRequest  (uint8_t i_PinNumber);
-  static WOCO_DigitalPinMode* CreateReadReply    (uint8_t i_PinNumber,
-                                                  uint8_t i_PinMode);
-  static WOCO_DigitalPinMode* CreateWriteRequest (uint8_t i_PinNumber,
-                                                  uint8_t i_PinMode);
-  static WOCO_DigitalPinMode* CreateWriteReply   ();
+  static WOCO_DigitalIOMode* CreateReadRequest  ( uint8_t i_IONumber);
+  static WOCO_DigitalIOMode* CreateReadReply    ( uint8_t i_IONumber,
+                                                  uint8_t i_IOMode);
+  static WOCO_DigitalIOMode* CreateWriteRequest ( uint8_t i_IONumber,
+                                                  uint8_t i_IOMode);
+  static WOCO_DigitalIOMode* CreateWriteReply   ();
 
   //-------------------- instance --------------------
 

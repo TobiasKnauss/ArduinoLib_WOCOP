@@ -27,8 +27,8 @@ public:
     WorkerType      = 0x0001,
     WorkerName      = 0x0002,
     AliveCheck      = 0x0100,
-    DigitalPinMode  = 0x0101,
-    DigitalPinState = 0x0102,
+    DigitalIOMode   = 0x0101,
+    DigitalIOState  = 0x0102,
   };
 
 //==================== Fields ====================
@@ -85,8 +85,8 @@ public:
   bool get_TypeIsRequest ();
   bool get_TypeIsReply ();
 
-  uint8_t         get_CommandData_ExpectedLength ();
-  virtual bool    get_CommandData_IsLengthVariable ();
+  uint8_t      get_CommandData_ExpectedLength ();
+  virtual bool get_CommandData_IsLengthVariable ();
 
   virtual uint16_t get_CommandDataLength_ReadRequest () = 0;
   virtual uint16_t get_CommandDataLength_ReadReply () = 0;

@@ -8,8 +8,8 @@
 
 WOCO	KEYWORD1
 WOCO_AliveCheck	KEYWORD1
-WOCO_DigitalPinMode	KEYWORD1
-WOCO_DigitalPinState	KEYWORD1
+WOCO_DigitalIOMode	KEYWORD1
+WOCO_DigitalIOState	KEYWORD1
 WOCO_WorkerName	KEYWORD1
 WOCO_WorkerType	KEYWORD1
 EResult	KEYWORD1
@@ -36,9 +36,9 @@ get_CommandDataLength_WriteRequest	KEYWORD2
 get_TypeIsReply	KEYWORD2
 get_TypeIsRequest	KEYWORD2
 
-get_PinMode	KEYWORD2
-get_PinNumber	KEYWORD2
-get_PinState	KEYWORD2
+get_IOMode	KEYWORD2
+get_IONumber	KEYWORD2
+get_IOState	KEYWORD2
 get_WorkerName	KEYWORD2
 get_WorkerType	KEYWORD2
 

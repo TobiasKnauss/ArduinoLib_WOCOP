@@ -1,5 +1,5 @@
-#ifndef WOCO_DigitalPinState_h
-#define WOCO_DigitalPinState_h
+#ifndef WOCO_DigitalIOState_h
+#define WOCO_DigitalIOState_h
 
 #include "WOCO.h"
 
@@ -15,27 +15,27 @@
 // request   1     2
 // reply     2     0
 //--------------------------------------------------------------------
-class WOCO_DigitalPinState
+class WOCO_DigitalIOState
 : public WOCO
 {
 //==================== Fields ====================
 private:
   //-------------------- instance --------------------
 
-  uint8_t m_PinNumber = 0;
-  bool    m_PinState  = false;
+  uint8_t m_IONumber = 0;
+  bool    m_IOState  = false;
 
 //==================== Constructors ====================
 public:
   //-------------------- instance --------------------
 
-  WOCO_DigitalPinState (bool    i_TypeIsReply,
+  WOCO_DigitalIOState (bool    i_TypeIsReply,
                         bool    i_ActionIsWrite);
 
-  WOCO_DigitalPinState (bool    i_TypeIsReply,
+  WOCO_DigitalIOState (bool    i_TypeIsReply,
                         bool    i_ActionIsWrite,
-                        uint8_t i_PinNumber,
-                        bool    i_PinState);
+                        uint8_t i_IONumber,
+                        bool    i_IOState);
 
 //==================== Properties ====================
 public:
@@ -46,19 +46,19 @@ public:
   uint16_t get_CommandDataLength_ReadRequest () override;
   uint16_t get_CommandDataLength_ReadReply () override;
 
-  uint8_t get_PinNumber ();
-  bool    get_PinState ();
+  uint8_t get_IONumber ();
+  bool    get_IOState ();
 
 //==================== Public Methods ====================
 public:
   //-------------------- static --------------------
 
-  static WOCO_DigitalPinState* CreateReadRequest  (uint8_t i_PinNumber);
-  static WOCO_DigitalPinState* CreateReadReply    (uint8_t i_PinNumber,
-                                                   bool    i_PinState);
-  static WOCO_DigitalPinState* CreateWriteRequest (uint8_t i_PinNumber,
-                                                   bool    i_PinState);
-  static WOCO_DigitalPinState* CreateWriteReply   ();
+  static WOCO_DigitalIOState* CreateReadRequest  (uint8_t i_IONumber);
+  static WOCO_DigitalIOState* CreateReadReply    (uint8_t i_IONumber,
+                                                  bool    i_IOState);
+  static WOCO_DigitalIOState* CreateWriteRequest (uint8_t i_IONumber,
+                                                  bool    i_IOState);
+  static WOCO_DigitalIOState* CreateWriteReply   ();
 
   //-------------------- instance --------------------
 
