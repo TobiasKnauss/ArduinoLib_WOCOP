@@ -15,13 +15,13 @@ WOCO::ECommand WOCO_AliveCheck::get_Command ()
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_AliveCheck::get_CommandDataLength_ReadRequest ()
+uint16_t WOCO_AliveCheck::get_CommandDataLength_ReadRequest ()
 {
   return 0;
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_AliveCheck::get_CommandDataLength_ReadReply ()
+uint16_t WOCO_AliveCheck::get_CommandDataLength_ReadReply ()
 {
   return 0;
 }
@@ -39,9 +39,9 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_AliveCheck::AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
-                                               uint8_t  i_CommandDataBufferLength,
-                                               uint8_t  i_CommandDataLength)
+::EResult WOCO_AliveCheck::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
+                                                uint16_t  i_CommandDataBufferLength,
+                                                uint16_t  i_CommandDataLength)
 {
   ::EResult result = WOCO::AnalyzeCommandData(i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
   if (result != ::EResult::SUCCESS)
@@ -51,9 +51,9 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_AliveCheck::ComposeCommandData (uint8_t* i_pCommandDataBuffer,
-                                               uint8_t  i_CommandDataBufferLength,
-                                               uint8_t& o_CommandDataLength)
+::EResult WOCO_AliveCheck::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
+                                                uint16_t  i_CommandDataBufferLength,
+                                                uint16_t& o_CommandDataLength)
 {
   ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
   if (result != ::EResult::SUCCESS)

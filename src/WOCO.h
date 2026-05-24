@@ -88,10 +88,10 @@ public:
   uint8_t         get_CommandData_ExpectedLength ();
   virtual bool    get_CommandData_IsLengthVariable ();
 
-  virtual uint8_t get_CommandDataLength_ReadRequest () = 0;
-  virtual uint8_t get_CommandDataLength_ReadReply () = 0;
-  virtual uint8_t get_CommandDataLength_WriteRequest ();
-  virtual uint8_t get_CommandDataLength_WriteReply ();
+  virtual uint16_t get_CommandDataLength_ReadRequest () = 0;
+  virtual uint16_t get_CommandDataLength_ReadReply () = 0;
+  virtual uint16_t get_CommandDataLength_WriteRequest ();
+  virtual uint16_t get_CommandDataLength_WriteReply ();
 
 //==================== Public Methods ====================
 public:
@@ -101,12 +101,12 @@ public:
 
   //-------------------- instance --------------------
 
-  virtual ::EResult AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
-                                        uint8_t  i_CommandDataBufferLength,
-                                        uint8_t  i_CommandDataLength);
-  virtual ::EResult ComposeCommandData (uint8_t* i_pCommandDataBuffer,
-                                        uint8_t  i_CommandDataBufferLength,
-                                        uint8_t& o_CommandDataLength);
+  virtual ::EResult AnalyzeCommandData (uint8_t*  i_pCommandDataBuffer,
+                                        uint16_t  i_CommandDataBufferLength,
+                                        uint16_t  i_CommandDataLength);
+  virtual ::EResult ComposeCommandData (uint8_t*  i_pCommandDataBuffer,
+                                        uint16_t  i_CommandDataBufferLength,
+                                        uint16_t& o_CommandDataLength);
 };
 
 #endif

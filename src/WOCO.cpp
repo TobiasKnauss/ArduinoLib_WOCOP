@@ -91,13 +91,13 @@ bool WOCO::get_CommandData_IsLengthVariable ()
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO::get_CommandDataLength_WriteRequest ()
+uint16_t WOCO::get_CommandDataLength_WriteRequest ()
 {
   return get_CommandDataLength_ReadReply ();
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO::get_CommandDataLength_WriteReply ()
+uint16_t WOCO::get_CommandDataLength_WriteReply ()
 {
   return 0;
 }
@@ -111,9 +111,9 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO::AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
-                                    uint8_t  i_CommandDataBufferLength,
-                                    uint8_t  i_CommandDataLength)
+::EResult WOCO::AnalyzeCommandData (uint8_t*  i_pCommandDataBuffer,
+                                    uint16_t  i_CommandDataBufferLength,
+                                    uint16_t  i_CommandDataLength)
 {
   if (i_pCommandDataBuffer == nullptr)
     return ::EResult::FAIL_Pointer_IsZero;
@@ -136,9 +136,9 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO::ComposeCommandData (uint8_t* i_pCommandDataBuffer,
-                                    uint8_t  i_CommandDataBufferLength,
-                                    uint8_t& o_CommandDataLength)
+::EResult WOCO::ComposeCommandData (uint8_t*  i_pCommandDataBuffer,
+                                    uint16_t  i_CommandDataBufferLength,
+                                    uint16_t& o_CommandDataLength)
 {
   if (i_pCommandDataBuffer == nullptr)
     return ::EResult::FAIL_Pointer_IsZero;

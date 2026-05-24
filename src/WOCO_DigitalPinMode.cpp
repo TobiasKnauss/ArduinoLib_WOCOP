@@ -29,13 +29,13 @@ WOCO::ECommand WOCO_DigitalPinMode::get_Command ()
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinMode::get_CommandDataLength_ReadRequest ()
+uint16_t WOCO_DigitalPinMode::get_CommandDataLength_ReadRequest ()
 {
   return 1;
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_DigitalPinMode::get_CommandDataLength_ReadReply ()
+uint16_t WOCO_DigitalPinMode::get_CommandDataLength_ReadReply ()
 {
   return 2;
 }
@@ -82,9 +82,9 @@ WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DigitalPinMode::AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
-                                                   uint8_t  i_CommandDataBufferLength,
-                                                   uint8_t  i_CommandDataLength)
+::EResult WOCO_DigitalPinMode::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
+                                                    uint16_t  i_CommandDataBufferLength,
+                                                    uint16_t  i_CommandDataLength)
 {
   ::EResult result = WOCO::AnalyzeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
   if (result != ::EResult::SUCCESS)
@@ -103,14 +103,14 @@ WOCO_DigitalPinMode* WOCO_DigitalPinMode::CreateWriteReply ()
   }
   if (!isOK)
     return ::EResult::FAIL_Buffer_GetValue;
-  
+
   return ::EResult::SUCCESS;
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DigitalPinMode::ComposeCommandData (uint8_t* i_pCommandDataBuffer,
-                                                   uint8_t  i_CommandDataBufferLength,
-                                                   uint8_t& o_CommandDataLength)
+::EResult WOCO_DigitalPinMode::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
+                                                    uint16_t  i_CommandDataBufferLength,
+                                                    uint16_t& o_CommandDataLength)
 {
   ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
   if (result != ::EResult::SUCCESS)

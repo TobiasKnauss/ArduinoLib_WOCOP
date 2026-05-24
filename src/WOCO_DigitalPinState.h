@@ -43,8 +43,8 @@ public:
 
   ECommand get_Command () override;
 
-  uint8_t get_CommandDataLength_ReadRequest () override;
-  uint8_t get_CommandDataLength_ReadReply () override;
+  uint16_t get_CommandDataLength_ReadRequest () override;
+  uint16_t get_CommandDataLength_ReadReply () override;
 
   uint8_t get_PinNumber ();
   bool    get_PinState ();
@@ -62,12 +62,12 @@ public:
 
   //-------------------- instance --------------------
 
-  ::EResult AnalyzeCommandData (uint8_t* i_pCommandDataBuffer,
-                                uint8_t  i_CommandDataBufferLength,
-                                uint8_t  i_CommandDataLength) override;
-  ::EResult ComposeCommandData (uint8_t* i_pCommandDataBuffer,
-                                uint8_t  i_CommandDataBufferLength,
-                                uint8_t& o_CommandDataLength) override;
+  ::EResult AnalyzeCommandData (uint8_t*  i_pCommandDataBuffer,
+                                uint16_t  i_CommandDataBufferLength,
+                                uint16_t  i_CommandDataLength) override;
+  ::EResult ComposeCommandData (uint8_t*  i_pCommandDataBuffer,
+                                uint16_t  i_CommandDataBufferLength,
+                                uint16_t& o_CommandDataLength) override;
 };
 
 #endif
