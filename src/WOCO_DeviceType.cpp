@@ -1,7 +1,7 @@
-#include "WOCO_WorkerType.h"
+#include "WOCO_DeviceType.h"
 
 //--------------------------------------------------------------------
-WOCO_WorkerType::WOCO_WorkerType (bool i_TypeIsReply,
+WOCO_DeviceType::WOCO_DeviceType (bool i_TypeIsReply,
                                   bool i_ActionIsWrite)
 : WOCO (i_TypeIsReply,
         i_ActionIsWrite)
@@ -9,53 +9,53 @@ WOCO_WorkerType::WOCO_WorkerType (bool i_TypeIsReply,
 }
 
 //--------------------------------------------------------------------
-WOCO_WorkerType::WOCO_WorkerType (bool     i_TypeIsReply,
+WOCO_DeviceType::WOCO_DeviceType (bool     i_TypeIsReply,
                                   bool     i_ActionIsWrite,
-                                  uint32_t i_WorkerType)
+                                  uint32_t i_DeviceType)
 : WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
-  m_WorkerType = i_WorkerType;
+  m_DeviceType = i_DeviceType;
 }
 
 //--------------------------------------------------------------------
-WOCO::ECommand WOCO_WorkerType::get_Command ()
+WOCO::ECommand WOCO_DeviceType::get_Command ()
 {
-  return ECommand::WorkerType;
+  return ECommand::DeviceType;
 }
 
 //--------------------------------------------------------------------
-uint16_t WOCO_WorkerType::get_CommandDataLength_ReadRequest ()
+uint16_t WOCO_DeviceType::get_CommandDataLength_ReadRequest ()
 {
   return 0;
 }
 
 //--------------------------------------------------------------------
-uint16_t WOCO_WorkerType::get_CommandDataLength_ReadReply ()
+uint16_t WOCO_DeviceType::get_CommandDataLength_ReadReply ()
 {
   return 4;
 }
 
 //--------------------------------------------------------------------
-uint32_t WOCO_WorkerType::get_WorkerType ()
+uint32_t WOCO_DeviceType::get_DeviceType ()
 {
-  return m_WorkerType;
+  return m_DeviceType;
 }
 
 //--------------------------------------------------------------------
-WOCO_WorkerType* WOCO_WorkerType::CreateReadRequest ()
+WOCO_DeviceType* WOCO_DeviceType::CreateReadRequest ()
 {
-  return new WOCO_WorkerType (TYPE_Request, ACTION_Read);
+  return new WOCO_DeviceType (TYPE_Request, ACTION_Read);
 }
 
 //--------------------------------------------------------------------
-WOCO_WorkerType* WOCO_WorkerType::CreateReadReply (uint32_t i_WorkerType)
+WOCO_DeviceType* WOCO_DeviceType::CreateReadReply (uint32_t i_DeviceType)
 {
-  return new WOCO_WorkerType (TYPE_Reply, ACTION_Read, i_WorkerType);
+  return new WOCO_DeviceType (TYPE_Reply, ACTION_Read, i_DeviceType);
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_WorkerType::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
+::EResult WOCO_DeviceType::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
                                                 uint16_t  i_CommandDataBufferLength,
                                                 uint16_t  i_CommandDataLength)
 {
@@ -67,7 +67,7 @@ WOCO_WorkerType* WOCO_WorkerType::CreateReadReply (uint32_t i_WorkerType)
   uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_GetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_WorkerType);
+    isOK &= RingBuffer_GetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_DeviceType);
   if (!isOK)
     return ::EResult::FAIL_Buffer_GetValue;
 
@@ -75,7 +75,7 @@ WOCO_WorkerType* WOCO_WorkerType::CreateReadReply (uint32_t i_WorkerType)
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_WorkerType::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
+::EResult WOCO_DeviceType::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
                                                 uint16_t  i_CommandDataBufferLength,
                                                 uint16_t& o_CommandDataLength)
 {
@@ -87,7 +87,7 @@ WOCO_WorkerType* WOCO_WorkerType::CreateReadReply (uint32_t i_WorkerType)
   uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_WorkerType);
+    isOK &= RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_DeviceType);
   if (!isOK)
     return ::EResult::FAIL_Buffer_SetValue;
 

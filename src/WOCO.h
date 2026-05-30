@@ -24,8 +24,8 @@ public:
   enum class ECommand : uint16_t
   {
     None            = 0x0,
-    WorkerType      = 0x0001,
-    WorkerName      = 0x0002,
+    DeviceType      = 0x0001,
+    DeviceName      = 0x0002,
     AliveCheck      = 0x0100,
     DigitalIOMode   = 0x0101,
     DigitalIOState  = 0x0102,

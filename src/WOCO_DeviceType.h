@@ -1,38 +1,38 @@
-#ifndef WOCO_WorkerType_h
-#define WOCO_WorkerType_h
+#ifndef WOCO_DeviceType_h
+#define WOCO_DeviceType_h
 
 #include "WOCO.h"
 
 //--------------------------------------------------------------------
-// Worker Command: Read Worker Type
+// Worker Command: Read Device Type
 //--------------------------------------------------------------------
 //  Offset  Length  Data
-//     0.0     4.0  Worker Type
+//     0.0     4.0  Device Type
 //--------------------------------------------------------------------
 // command data size combinations
 //         read  write
 // request   0    --
 // reply     4    --
 //--------------------------------------------------------------------
-class WOCO_WorkerType
+class WOCO_DeviceType
 : public WOCO
 {
 //==================== Fields ====================
 private:
   //-------------------- instance --------------------
 
-  uint32_t m_WorkerType = 0;
+  uint32_t m_DeviceType = 0;
 
 //==================== Constructors ====================
 public:
   //-------------------- instance --------------------
 
-  WOCO_WorkerType (bool i_TypeIsReply,
+  WOCO_DeviceType (bool i_TypeIsReply,
                    bool i_ActionIsWrite);
 
-  WOCO_WorkerType (bool     i_TypeIsReply,
+  WOCO_DeviceType (bool     i_TypeIsReply,
                    bool     i_ActionIsWrite,
-                   uint32_t i_WorkerType);
+                   uint32_t i_DeviceType);
 
 //==================== Properties ====================
 public:
@@ -43,14 +43,14 @@ public:
   uint16_t get_CommandDataLength_ReadRequest () override;
   uint16_t get_CommandDataLength_ReadReply () override;
 
-  uint32_t get_WorkerType ();
+  uint32_t get_DeviceType ();
 
 //==================== Public Methods ====================
 public:
   //-------------------- static --------------------
 
-  static WOCO_WorkerType* CreateReadRequest ();
-  static WOCO_WorkerType* CreateReadReply   (uint32_t i_WorkerType);
+  static WOCO_DeviceType* CreateReadRequest ();
+  static WOCO_DeviceType* CreateReadReply   (uint32_t i_DeviceType);
 
   //-------------------- instance --------------------
 

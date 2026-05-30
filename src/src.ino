@@ -3,15 +3,15 @@
 #include "WOCO_AliveCheck.h"
 #include "WOCO_DigitalIOState.h"
 #include "WOCO_DigitalIOMode.h"
-#include "WOCO_WorkerName.h"
-#include "WOCO_WorkerType.h"
+#include "WOCO_DeviceName.h"
+#include "WOCO_DeviceType.h"
 
 WOCO* m_pWocoReadDigitalIOState   = WOCO_DigitalIOState ::CreateReadRequest  (1);
 WOCO* m_pWocoWriteDigitalIOState  = WOCO_DigitalIOState ::CreateWriteRequest (1, HIGH);
 WOCO* m_pWocoReadDigitalIOMode    = WOCO_DigitalIOMode  ::CreateReadRequest  (1);
 WOCO* m_pWocoWriteDigitalIOMode   = WOCO_DigitalIOMode  ::CreateWriteRequest (1, OUTPUT);
-WOCO* m_pWocoReadWorkerName       = WOCO_WorkerName     ::CreateReadRequest  ();
-WOCO* m_pWocoReadWorkerType       = WOCO_WorkerType     ::CreateReadRequest  ();
+WOCO* m_pWocoReadDeviceName       = WOCO_DeviceName     ::CreateReadRequest  ();
+WOCO* m_pWocoReadDeviceType       = WOCO_DeviceType     ::CreateReadRequest  ();
 
 uint8_t m_CommandDataBuffer[40];
 
@@ -26,8 +26,8 @@ void setup ()
   m_pWocoWriteDigitalIOState  ->ComposeCommandData (m_CommandDataBuffer, sizeof (m_CommandDataBuffer), commandDataLength);
   m_pWocoReadDigitalIOMode    ->ComposeCommandData (m_CommandDataBuffer, sizeof (m_CommandDataBuffer), commandDataLength);
   m_pWocoWriteDigitalIOMode   ->ComposeCommandData (m_CommandDataBuffer, sizeof (m_CommandDataBuffer), commandDataLength);
-  m_pWocoReadWorkerName       ->ComposeCommandData (m_CommandDataBuffer, sizeof (m_CommandDataBuffer), commandDataLength);
-  m_pWocoReadWorkerType       ->ComposeCommandData (m_CommandDataBuffer, sizeof (m_CommandDataBuffer), commandDataLength);
+  m_pWocoReadDeviceName       ->ComposeCommandData (m_CommandDataBuffer, sizeof (m_CommandDataBuffer), commandDataLength);
+  m_pWocoReadDeviceType       ->ComposeCommandData (m_CommandDataBuffer, sizeof (m_CommandDataBuffer), commandDataLength);
 
   delete (pWocoReadAliveCheck);
   delete (m_pWocoReadDigitalIOState);

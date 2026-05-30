@@ -2,8 +2,8 @@
 #include "WOCO_AliveCheck.h"
 #include "WOCO_DigitalIOMode.h"
 #include "WOCO_DigitalIOState.h"
-#include "WOCO_WorkerName.h"
-#include "WOCO_WorkerType.h"
+#include "WOCO_DeviceName.h"
+#include "WOCO_DeviceType.h"
 
 //--------------------------------------------------------------------
 #define X(name) const char WOCO::_EResult_##name[] PROGMEM = #name;
@@ -32,8 +32,8 @@ const char* const WOCO::c_EnumNames_ClassFailures[] PROGMEM =
   case ECommand::AliveCheck:      o_pWOCO = new WOCO_AliveCheck     (i_TypeIsReply, i_ActionIsWrite); break;
   case ECommand::DigitalIOMode:   o_pWOCO = new WOCO_DigitalIOMode  (i_TypeIsReply, i_ActionIsWrite); break;
   case ECommand::DigitalIOState:  o_pWOCO = new WOCO_DigitalIOState (i_TypeIsReply, i_ActionIsWrite); break;
-  case ECommand::WorkerName:      o_pWOCO = new WOCO_WorkerName     (i_TypeIsReply, i_ActionIsWrite); break;
-  case ECommand::WorkerType:      o_pWOCO = new WOCO_WorkerType      (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::DeviceName:      o_pWOCO = new WOCO_DeviceName     (i_TypeIsReply, i_ActionIsWrite); break;
+  case ECommand::DeviceType:      o_pWOCO = new WOCO_DeviceType     (i_TypeIsReply, i_ActionIsWrite); break;
   default: return (::EResult)EResult::FAIL_WOCO_Command_IdInvalid;
   }
 

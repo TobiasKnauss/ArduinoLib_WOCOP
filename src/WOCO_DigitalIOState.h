@@ -29,10 +29,10 @@ private:
 public:
   //-------------------- instance --------------------
 
-  WOCO_DigitalIOState (bool    i_TypeIsReply,
+  WOCO_DigitalIOState ( bool    i_TypeIsReply,
                         bool    i_ActionIsWrite);
 
-  WOCO_DigitalIOState (bool    i_TypeIsReply,
+  WOCO_DigitalIOState ( bool    i_TypeIsReply,
                         bool    i_ActionIsWrite,
                         uint8_t i_IONumber,
                         bool    i_IOState);

@@ -43,11 +43,7 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
                                                 uint16_t  i_CommandDataBufferLength,
                                                 uint16_t  i_CommandDataLength)
 {
-  ::EResult result = WOCO::AnalyzeCommandData(i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
-  if (result != ::EResult::SUCCESS)
-    return result;
-
-  return ::EResult::SUCCESS;
+  return WOCO::AnalyzeCommandData(i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
 }
 
 //--------------------------------------------------------------------
@@ -55,9 +51,5 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
                                                 uint16_t  i_CommandDataBufferLength,
                                                 uint16_t& o_CommandDataLength)
 {
-  ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
-  if (result != ::EResult::SUCCESS)
-    return result;
-
-  return ::EResult::SUCCESS;
+  return WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
 }

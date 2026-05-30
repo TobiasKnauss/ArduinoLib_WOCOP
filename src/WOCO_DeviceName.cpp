@@ -1,79 +1,79 @@
 #include "Arduino.h"
-#include "WOCO_WorkerName.h"
+#include "WOCO_DeviceName.h"
 
 //--------------------------------------------------------------------
-WOCO_WorkerName::WOCO_WorkerName (bool i_TypeIsReply,
+WOCO_DeviceName::WOCO_DeviceName (bool i_TypeIsReply,
                                   bool i_ActionIsWrite)
 : WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
-  memset (m_WorkerName, 0x00, sizeof (m_WorkerName));
+  memset (m_DeviceName, 0x00, sizeof (m_DeviceName));
 }
 
 //--------------------------------------------------------------------
-WOCO_WorkerName::WOCO_WorkerName (bool    i_TypeIsReply,
+WOCO_DeviceName::WOCO_DeviceName (bool    i_TypeIsReply,
                                   bool    i_ActionIsWrite,
-                                  char*   i_pWorkerName,
-                                  uint8_t i_WorkerNameLength)
+                                  char*   i_pDeviceName,
+                                  uint8_t i_DeviceNameLength)
 : WOCO (i_TypeIsReply,
         i_ActionIsWrite)
 {
-  memset (m_WorkerName, 0x00, sizeof (m_WorkerName));
-  if (i_pWorkerName != nullptr)
-    memcpy (m_WorkerName, i_pWorkerName, min (sizeof (m_WorkerName) - 1, i_WorkerNameLength));
+  memset (m_DeviceName, 0x00, sizeof (m_DeviceName));
+  if (i_pDeviceName != nullptr)
+    memcpy (m_DeviceName, i_pDeviceName, min (sizeof (m_DeviceName) - 1, i_DeviceNameLength));
 }
 
 //--------------------------------------------------------------------
-WOCO::ECommand WOCO_WorkerName::get_Command ()
+WOCO::ECommand WOCO_DeviceName::get_Command ()
 {
-  return ECommand::WorkerName;
+  return ECommand::DeviceName;
 }
 
 //--------------------------------------------------------------------
-bool WOCO_WorkerName::get_CommandData_IsLengthVariable ()
+bool WOCO_DeviceName::get_CommandData_IsLengthVariable ()
 {
   return true;
 }
 
 //--------------------------------------------------------------------
-uint16_t WOCO_WorkerName::get_CommandDataLength_ReadRequest ()
+uint16_t WOCO_DeviceName::get_CommandDataLength_ReadRequest ()
 {
   return 0;
 }
 
 //--------------------------------------------------------------------
-uint16_t WOCO_WorkerName::get_CommandDataLength_ReadReply ()
+uint16_t WOCO_DeviceName::get_CommandDataLength_ReadReply ()
 {
   return 0;
 }
 
 //--------------------------------------------------------------------
-char* WOCO_WorkerName::get_WorkerName ()
+char* WOCO_DeviceName::get_DeviceName ()
 {
-  return m_WorkerName;
+  return m_DeviceName;
 }
 
 //--------------------------------------------------------------------
-uint8_t WOCO_WorkerName::get_WorkerNameLength ()
+uint8_t WOCO_DeviceName::get_DeviceNameLength ()
 {
-  return strlen (m_WorkerName);
+  return strlen (m_DeviceName);
 }
 
 //--------------------------------------------------------------------
-WOCO_WorkerName* WOCO_WorkerName::CreateReadRequest ()
+WOCO_DeviceName* WOCO_DeviceName::CreateReadRequest ()
 {
-  return new WOCO_WorkerName (TYPE_Request, ACTION_Read);
+  return new WOCO_DeviceName (TYPE_Request, ACTION_Read);
 }
 
 //--------------------------------------------------------------------
-WOCO_WorkerName* WOCO_WorkerName::CreateReadReply (char*   i_pWorkerName,
-                                                   uint8_t i_WorkerNameLength)
+WOCO_DeviceName* WOCO_DeviceName::CreateReadReply (char*   i_pDeviceName,
+                                                   uint8_t i_DeviceNameLength)
 {
-  return new WOCO_WorkerName (TYPE_Reply, ACTION_Read, i_pWorkerName, i_WorkerNameLength);
+  return new WOCO_DeviceName (TYPE_Reply, ACTION_Read, i_pDeviceName, i_DeviceNameLength);
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_WorkerName::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
+::EResult WOCO_DeviceName::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
                                                 uint16_t  i_CommandDataBufferLength,
                                                 uint16_t  i_CommandDataLength)
 {
@@ -84,9 +84,9 @@ WOCO_WorkerName* WOCO_WorkerName::CreateReadReply (char*   i_pWorkerName,
   bool isOK = true;
   uint8_t* pCurrent = i_pCommandDataBuffer;
 
-  memset (m_WorkerName, 0x00, sizeof (m_WorkerName));
+  memset (m_DeviceName, 0x00, sizeof (m_DeviceName));
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_GetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, i_CommandDataLength, (uint8_t*)m_WorkerName);
+    isOK &= RingBuffer_GetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, i_CommandDataLength, (uint8_t*)m_DeviceName);
   if (!isOK)
     return ::EResult::FAIL_Buffer_GetValue;
 
@@ -94,7 +94,7 @@ WOCO_WorkerName* WOCO_WorkerName::CreateReadReply (char*   i_pWorkerName,
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_WorkerName::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
+::EResult WOCO_DeviceName::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
                                                 uint16_t  i_CommandDataBufferLength,
                                                 uint16_t& o_CommandDataLength)
 {
@@ -106,7 +106,7 @@ WOCO_WorkerName* WOCO_WorkerName::CreateReadReply (char*   i_pWorkerName,
   uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_SetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, get_WorkerNameLength (), (uint8_t*)get_WorkerName ());
+    isOK &= RingBuffer_SetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, get_DeviceNameLength (), (uint8_t*)get_DeviceName ());
   if (!isOK)
     return ::EResult::FAIL_Buffer_SetValue;
 

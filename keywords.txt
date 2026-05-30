@@ -10,8 +10,8 @@ WOCO	KEYWORD1
 WOCO_AliveCheck	KEYWORD1
 WOCO_DigitalIOMode	KEYWORD1
 WOCO_DigitalIOState	KEYWORD1
-WOCO_WorkerName	KEYWORD1
-WOCO_WorkerType	KEYWORD1
+WOCO_DeviceName	KEYWORD1
+WOCO_DeviceType	KEYWORD1
 EResult	KEYWORD1
 ECommand	KEYWORD1
 
@@ -39,8 +39,8 @@ get_TypeIsRequest	KEYWORD2
 get_IOMode	KEYWORD2
 get_IONumber	KEYWORD2
 get_IOState	KEYWORD2
-get_WorkerName	KEYWORD2
-get_WorkerType	KEYWORD2
+get_DeviceName	KEYWORD2
+get_DeviceType	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
