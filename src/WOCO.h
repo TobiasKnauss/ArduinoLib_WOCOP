@@ -2,7 +2,7 @@
 #define WOCO_h
 
 #include <MemoryTools.h>
-#include <MemoryTools_RingBuffer.h>
+#include <ByteBuffer.h>
 #include <Result.h>
 
 //--------------------------------------------------------------------
@@ -39,6 +39,11 @@ public:
   static const bool ACTION_Write = true;
   static const bool TYPE_Reply   = true;
   static const bool TYPE_Request = false;
+
+protected:
+  //-------------------- static --------------------
+
+  static const bool c_InvertByteOrder = true;
 
 private:
   //-------------------- static --------------------
@@ -101,12 +106,10 @@ public:
 
   //-------------------- instance --------------------
 
-  virtual ::EResult AnalyzeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                        uint16_t  i_CommandDataBufferLength,
-                                        uint16_t  i_CommandDataLength);
-  virtual ::EResult ComposeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                        uint16_t  i_CommandDataBufferLength,
-                                        uint16_t& o_CommandDataLength);
+  virtual ::EResult AnalyzeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                        uint16_t    i_CommandDataLength);
+  virtual ::EResult ComposeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                        uint16_t&   o_CommandDataLength);
 };
 
 #endif

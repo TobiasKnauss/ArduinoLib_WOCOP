@@ -111,13 +111,12 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO::AnalyzeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                    uint16_t  i_CommandDataBufferLength,
-                                    uint16_t  i_CommandDataLength)
+::EResult WOCO::AnalyzeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                    uint16_t    i_CommandDataLength)
 {
   if (i_pCommandDataBuffer == nullptr)
     return ::EResult::FAIL_Pointer_IsZero;
-  if (i_CommandDataLength > i_CommandDataBufferLength)
+  if (i_CommandDataLength > i_pCommandDataBuffer->get_Length ())
     return ::EResult::FAIL_Buffer_TooSmall;
 
   uint8_t expectedLength = get_CommandData_ExpectedLength ();
@@ -136,18 +135,18 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO::ComposeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                    uint16_t  i_CommandDataBufferLength,
-                                    uint16_t& o_CommandDataLength)
+::EResult WOCO::ComposeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                    uint16_t&   o_CommandDataLength)
 {
   if (i_pCommandDataBuffer == nullptr)
     return ::EResult::FAIL_Pointer_IsZero;
 
   uint8_t expectedLength = get_CommandData_ExpectedLength ();
-  if (i_CommandDataBufferLength < expectedLength)
+  if (i_pCommandDataBuffer->get_Length () < expectedLength)
     return ::EResult::FAIL_Buffer_TooSmall;
 
   o_CommandDataLength = 0;
+  i_pCommandDataBuffer->SetWritePointer (0);
 
   return ::EResult::SUCCESS;
 }

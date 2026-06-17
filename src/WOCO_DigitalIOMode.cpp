@@ -82,53 +82,41 @@ WOCO_DigitalIOMode* WOCO_DigitalIOMode::CreateWriteReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DigitalIOMode::AnalyzeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                                  uint16_t  i_CommandDataBufferLength,
-                                                  uint16_t  i_CommandDataLength)
+::EResult WOCO_DigitalIOMode::AnalyzeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                                  uint16_t    i_CommandDataLength)
 {
-  ::EResult result = WOCO::AnalyzeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
+  ::EResult result = WOCO::AnalyzeCommandData (i_pCommandDataBuffer, i_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
-
-  bool isOK = true;
-  uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsRequest ()
   ||  get_ActionIsRead ())
   {
-    isOK &= RingBuffer_GetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_IONumber);
+    i_pCommandDataBuffer->ReadValueAndMovePtr (m_IONumber);
     if (get_TypeIsReply ()
     ||  get_ActionIsWrite ())
-      isOK &= RingBuffer_GetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_IOMode);
+      i_pCommandDataBuffer->ReadValueAndMovePtr (m_IOMode);
   }
-  if (!isOK)
-    return ::EResult::FAIL_Buffer_GetValue;
 
   return ::EResult::SUCCESS;
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DigitalIOMode::ComposeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                                  uint16_t  i_CommandDataBufferLength,
-                                                  uint16_t& o_CommandDataLength)
+::EResult WOCO_DigitalIOMode::ComposeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                                  uint16_t&   o_CommandDataLength)
 {
-  ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
+  ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, o_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
-
-  bool isOK = true;
-  uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsRequest ()
   ||  get_ActionIsRead ())
   {
-    isOK &= RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_IONumber);
+    i_pCommandDataBuffer->WriteValueAndMovePtr (m_IONumber);
     if (get_TypeIsReply ()
     ||  get_ActionIsWrite ())
-      isOK &= RingBuffer_SetValueAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, m_IOMode);
+      i_pCommandDataBuffer->WriteValueAndMovePtr (m_IOMode);
   }
-  if (!isOK)
-    return ::EResult::FAIL_Buffer_SetValue;
 
   return ::EResult::SUCCESS;
 }

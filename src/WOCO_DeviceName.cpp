@@ -73,42 +73,38 @@ WOCO_DeviceName* WOCO_DeviceName::CreateReadReply (char*   i_pDeviceName,
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DeviceName::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
-                                                uint16_t  i_CommandDataBufferLength,
-                                                uint16_t  i_CommandDataLength)
+::EResult WOCO_DeviceName::AnalyzeCommandData ( ByteBuffer* i_pCommandDataBuffer,
+                                                uint16_t    i_CommandDataLength)
 {
-  ::EResult result = WOCO::AnalyzeCommandData(i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
+  ::EResult result = WOCO::AnalyzeCommandData (i_pCommandDataBuffer, i_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
 
   bool isOK = true;
-  uint8_t* pCurrent = i_pCommandDataBuffer;
 
   memset (m_DeviceName, 0x00, sizeof (m_DeviceName));
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_GetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, i_CommandDataLength, (uint8_t*)m_DeviceName);
+    isOK &= i_pCommandDataBuffer->ReadBytesAndMovePtr (i_CommandDataLength, (uint8_t*)m_DeviceName, false);
   if (!isOK)
-    return ::EResult::FAIL_Buffer_GetValue;
+    return ::EResult::FAIL_Buffer_ReadValue;
 
   return ::EResult::SUCCESS;
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_DeviceName::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
-                                                uint16_t  i_CommandDataBufferLength,
-                                                uint16_t& o_CommandDataLength)
+::EResult WOCO_DeviceName::ComposeCommandData ( ByteBuffer* i_pCommandDataBuffer,
+                                                uint16_t&   o_CommandDataLength)
 {
-  ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
+  ::EResult result = WOCO::ComposeCommandData (i_pCommandDataBuffer, o_CommandDataLength);
   if (result != ::EResult::SUCCESS)
     return result;
 
   bool isOK = true;
-  uint8_t* pCurrent = i_pCommandDataBuffer;
 
   if (get_TypeIsReply ())
-    isOK &= RingBuffer_SetBytesAndMovePtr (i_pCommandDataBuffer, i_CommandDataBufferLength, pCurrent, get_DeviceNameLength (), (uint8_t*)get_DeviceName ());
+    isOK &= i_pCommandDataBuffer->WriteBytesAndMovePtr (get_DeviceNameLength (), (uint8_t*)get_DeviceName (), false);
   if (!isOK)
-    return ::EResult::FAIL_Buffer_SetValue;
+    return ::EResult::FAIL_Buffer_WriteValue;
 
   return ::EResult::SUCCESS;
 }

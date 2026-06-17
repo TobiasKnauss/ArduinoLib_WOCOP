@@ -39,17 +39,15 @@ WOCO_AliveCheck* WOCO_AliveCheck::CreateReadReply ()
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_AliveCheck::AnalyzeCommandData ( uint8_t*  i_pCommandDataBuffer,
-                                                uint16_t  i_CommandDataBufferLength,
-                                                uint16_t  i_CommandDataLength)
+::EResult WOCO_AliveCheck::AnalyzeCommandData ( ByteBuffer* i_pCommandDataBuffer,
+                                                uint16_t    i_CommandDataLength)
 {
-  return WOCO::AnalyzeCommandData(i_pCommandDataBuffer, i_CommandDataBufferLength, i_CommandDataLength);
+  return WOCO::AnalyzeCommandData (i_pCommandDataBuffer, i_CommandDataLength);
 }
 
 //--------------------------------------------------------------------
-::EResult WOCO_AliveCheck::ComposeCommandData ( uint8_t*  i_pCommandDataBuffer,
-                                                uint16_t  i_CommandDataBufferLength,
-                                                uint16_t& o_CommandDataLength)
+::EResult WOCO_AliveCheck::ComposeCommandData ( ByteBuffer* i_pCommandDataBuffer,
+                                                uint16_t&   o_CommandDataLength)
 {
-  return WOCO::ComposeCommandData (i_pCommandDataBuffer, i_CommandDataBufferLength, o_CommandDataLength);
+  return WOCO::ComposeCommandData (i_pCommandDataBuffer, o_CommandDataLength);
 }

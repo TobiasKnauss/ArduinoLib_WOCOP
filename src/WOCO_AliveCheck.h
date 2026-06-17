@@ -42,12 +42,10 @@ public:
 
   //-------------------- instance --------------------
 
-  ::EResult AnalyzeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                uint16_t  i_CommandDataBufferLength,
-                                uint16_t  i_CommandDataLength) override;
-  ::EResult ComposeCommandData (uint8_t*  i_pCommandDataBuffer,
-                                uint16_t  i_CommandDataBufferLength,
-                                uint16_t& o_CommandDataLength) override;
+  ::EResult AnalyzeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                uint16_t    i_CommandDataLength) override;
+  ::EResult ComposeCommandData (ByteBuffer* i_pCommandDataBuffer,
+                                uint16_t&   o_CommandDataLength) override;
 };
 
 #endif
