@@ -130,6 +130,7 @@ const __FlashStringHelper* WOCO::GetResultText (::EResult i_Result)
     if (i_CommandDataLength != expectedLength)
       return (::EResult)EResult::FAIL_WOCO_CommandData_LengthWrong;
   }
+  i_pCommandDataBuffer->SetReadPointer (0);
 
   return ::EResult::SUCCESS;
 }
